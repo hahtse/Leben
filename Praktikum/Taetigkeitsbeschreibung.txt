@@ -1,0 +1,13 @@
+Tätigkeitsbeschreibung Hans-Christian Heinz, 50425
+bei Max-Planck-Institut für Kognitions- und Neurowissenschaften Leipzig
+Abteilung Neurophysik
+Betreuerin: PD Dr. Gabriele Lohmann
+Telefon: 0341 9940 2622
+E-Mail: Lohmann@cbs.mpg.de
+
+Das Praxisprojekt wird in erster Linie die Arbeit am ISIS/Lipsia-Paket der
+Abteilung Neurophysik umfassen. Dazugehörige Unteraufgaben sind beispielsweise
+die Pflege (Updates, Bugfixes, Paketerstellung) und Erweiterung (Plug-Ins zur 
+Verarbeitung neuer Datentypen) der bestehenden Software, sowie die Erstellung 
+neuer Paketbestandteile (aktuell: Programm zur 3D-Ansicht von Gehirnen mittels 
+VTK und QT).

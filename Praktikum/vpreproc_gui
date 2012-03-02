@@ -491,7 +491,8 @@ class MyForm(QtGui.QMainWindow):
         QtCore.QObject.connect(self.ui.check_set_tr, QtCore.SIGNAL("stateChanged(int)"), self.change_tr )
         QtCore.QObject.connect(self.ui.check_atlas_registration, QtCore.SIGNAL("stateChanged(int)"), self.change_atlas_reg)
     def show_help(self):
-        self.ui.help_view.setUrl(QtCore.QUrl(self.helpDict[str(self.ui.help_Box.currentText())]))
+        if( self.ui.help_Box.currentText() != "" ):
+            self.ui.help_view.setUrl(QtCore.QUrl(self.helpDict[str(self.ui.help_Box.currentText())]))
         
     def view_template_image(self):
         imageToShow = self.templateDict[str(self.ui.template_box.currentText())]

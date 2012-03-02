@@ -1,0 +1,53 @@
+#! /bin/csh
+
+switch($#argv)
+	case 1:
+		breaksw
+	case 3:
+		breaksw
+	case 5:
+		breaksw
+	default:
+		echo 'falsche Argumentanzahl'
+		exit 1
+endsw
+
+	set name = $argv[1]
+	set pfad = $home
+	set ausgabe = 0
+	if($#argv >= 3)then
+		switch( $argv[2] )
+			case '-p':
+				set pfad = $argv[3]
+				breaksw
+			case '-f':
+				set ausgabe = $argv[3]
+				breaksw
+			default:
+				echo 'falsche Argumente'
+				exit 1
+		endsw
+	endif
+
+	if($#argv == 5)then
+		switch ( $argv[4] )
+			case '-p':
+				set pfad = $argv[5]
+				breaksw
+			case '-f':
+				set ausgabe = $argv[5]
+				breaksw
+			default:
+				echo 'falsche Argumente'
+				exit 1
+		endsw
+	endif
+
+	if($ausgabe == 0)then
+		find $pfad -name $name
+	else
+		find $pfad -name $name >& $ausgabe
+		grep $name $ausgabe
+	endif
+
+exit 0

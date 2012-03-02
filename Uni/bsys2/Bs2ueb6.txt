@@ -1,0 +1,29 @@
+6. Uebung zum Fach Betriebssysteme II
+
+Erstellen Sie zwei C-Programme, die einen Datenaustausch ueber 
+einen Shared Memory - Bereich durchfuehren.
+
+In einem Sender-Programm erfolgt eine zeilenweise Eingabe von 
+stdin. Die eingegebene Zeichenkette wird zusammen mit einer 
+eindeutigen Sender-Kennung in den Shared Memory gespeichert. 
+Ctrl-D schliesst den Eingabe-Datenstrom, indem eine Endemeldung 
+fuer den Empfaenger in den Shared Memory gespeichert wird. Danach 
+wird das Sender-Programm beendet. Das Sender-Programm soll mehr-
+fach parallel gestartet werden koennen, wobei alle Sender den-
+selben Shared Memory benutzen. 
+Ein Empfaenger-Programm uebernimmt die Daten aus dem Shared 
+Memory und gibt die Zeichenkette auf stdout aus. Mit Ctrl-C wird 
+das Beenden des Empfaenger-Programms eingeleitet. Wenn danach alle 
+Sender-Programme beendet sind, wird der Shared Memory vom Empfaenger-
+Programm beseitigt und das Programm beendet.
+
+Der parallele Zugriff auf den Shared Memory durch die Sender und den 
+Empfaenger ist ueber Semaphore zu synchronisieren. Mit Hilfe ent-
+sprechender Flags soll gesichert werden, dass 
+- der Empfaenger nur gueltige Daten uebernimmt, 
+- Daten nicht mehrfach uebernommen werden, 
+- keine unverarbeiteten Daten von Sendern ueberschrieben werden und
+- die An- und Abmeldung von Sendern erfolgen kann.
+
+Abgabetermin: 10.06.2011
+

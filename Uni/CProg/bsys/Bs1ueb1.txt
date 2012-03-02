@@ -1,0 +1,29 @@
+1. Uebung zum Fach Betriebssysteme I
+
+
+Erstellen Sie eine C-Shell-Kommandoprozedur, die mit
+  
+	list [filename [string] ]
+
+aufgerufen wird, wobei das letzte oder beide Argumente fehlen 
+koennen.
+Wurde das Kommando ohne  string - Argument aufgerufen, ist der 
+string  bei der Kommando-Ausfuehrung einzugeben.
+Wenn das Kommande ohne beide Argumente aufgerufen wird, so sind 
+beide Zeichenfolgen  waehrend der Ausfuehrung der Kommandoprozedur 
+einzugeben. Sollte beim Filenamen eine leere Eingabe erfolgen, dann 
+ist als Filename  passwd  zu benutzen.
+Enthaelt der Filename die Zeichenfolge passwd , dann ist der Inhalt 
+des gleichnamigen NIS-Eintrages mit  ypcat passwd  auszugeben. Sonst 
+ist das angegebene File ist mit dem Kommando cat filename  auszugeben.
+Enthaelt string eine nicht leere Zeichenfolge, ist der entstehende 
+Ausgabestrom mittels Pipe an das Kommando  grep  (siehe man) weiter-
+zuleiten, das die Ausgabedaten nach dem  string  filtert. Bei leerer  
+string- Eingabe soll der gesamte Inhalt des Files bzw. von passwd 
+ausgegeben werden. 
+
+
+
+
+Abgabetermin: 15.10.2010
+

@@ -1,0 +1,40 @@
+8. Uebung zum Fach Betriebssysteme I
+
+
+Die Programme zur 6. Uebung sind um die Behandlung bzw. das 
+Senden von Signalen zu erweitern.
+
+Vom Parent-Prozess  ist ein erster Child-Prozess einzurichten, 
+in dem analog zur 6. Uebung ein Programmcode mit execv() 
+gestartet wird, der eine Primzahlenberechnung mit ausreichender 
+Dauer ausfuehrt. Der Endwert für die Primzahlenberechnung ist 
+bei execv() als Argument zu uebergeben.
+In diesem Programm ist eine Signalbehandlung fuer die Signale 
+SIGINT, SIGQUIT, SIGUSR1 und SIGUSR2 durchzufuehren:
+* Fuer jedes eintreffende Signal ist ein separater Signal-
+  Zaehler zu inkrementieren.
+* SIGUSR1 - Ausgabe des aktuellen Standes der Primzahlen-
+            berechnung.
+* SIGUSR2 - Neustart der Primzahlenberechnung.
+* SIGINT  - Ausgabe der aktuellen Signal-Zaehlerstaende.
+* SIGQUIT - Beenden des Child-Prozesses.
+* Alle anderen Signale sind zu ignorieren.
+
+Weiterhin ist im Parent-Prozess ein zweiter Child-Prozess zu 
+starten, in dem ein anderer Programmcode mit execv() gestartet 
+wird. Darin wird die Nummer des zu sendenden Signals ueber 
+stdin eingegeben (nur die oben aufgefuehrten Signale zulassen). 
+Diese Signale sind an den ersten Child-Prozess zu senden. Dazu 
+muss bei execv() die PID des ersten Child-Prozesses als Argument
+uebergeben werden. Nach dem Senden von SIGQUIT ist auch der 
+zweiten Child-Prozess zu beenden.
+
+Im Parent-Prozess ist der Status der Child-Prozesse im Wechsel 
+mit waitpid() zu testen und bei Ende eines Child-Prozesses 
+auszugeben.
+
+Zur Bearbeitung der Programme ist make zu verwenden.
+
+
+Abgabetermin: 3.12.2010
+

@@ -1,0 +1,34 @@
+4. Uebung zum Fach Betriebssysteme I
+
+
+Erstellen Sie fuer die Bourne-Shell eine Kommandoprozedur zur 
+Suche eines Files ab einem vorgegebenen Verzeichnis. Aufruf mit:
+
+     bsuche filename1 [-p pfad] [-f filename2]
+
+Falls die Anzahl der Argumente beim Kommandoaufruf nicht 1, 3 
+oder 5 betraegt, soll ein Benutzungshinweis fuer den Kommando-
+aufruf ausgegeben werden. Die in [] angegebenen Argumentpaare 
+sind optional, ihre Reihenfolge soll vertauschbar sein. Bei 
+falschen Optionsangaben soll ebenfalls ein Benutzungshinweis 
+ausgegeben werden.
+Falls die Option -p nicht angegeben wurde, ist die Suche nach 
+filename1 standardmaessig im Home-Directory zu beginnen. Wenn 
+die Option -p als 2. oder 4. Argument vorhanden ist, soll die 
+Suche aber bei dem als 3. bzw. 5. Argument angegebenen Pfad 
+beginnen. 
+Zur Suche im Filesystem ist das find-Kommando mit folgenden 
+Parametern zu verwenden:
+     find pfad -name filename1
+Dabei ist  pfad  das Verzeichnis, bei dem die Suche nach 
+filename1  starten soll.
+Falls die Option -f nicht angegeben wurde, sind alle Ausgaben 
+auf dem Bildschirm auszugeben. Ist die Option -f als 2. oder 4. 
+Argument vorhanden, dann soll stdout in das als 3. bzw. 5. 
+Argument angegebene File umgelenkt werden. stderr soll in ein 
+separates Fehler-File umgelenkt werden, dessen Filename aus dem 
+Filenamen fuer die Standard-Ausgabe zu erzeugen ist (z. B. durch 
+anfuegen von  .err). Der Inhalt des stdout-Files ist auszugeben. 
+
+
+Abgabetermin: 05.11.2010

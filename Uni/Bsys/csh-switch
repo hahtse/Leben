@@ -1,0 +1,135 @@
+#! /bin/csh 
+# Verwendung von Sonderzeichen in switch-Anweisung
+# im case-Muster z. T. kein normales Quoting
+# Sonderzeichen ? * \ [ ] ! ' " ` ~ # $ & ... 
+echo Sonderzeichen und switch-Anweisung
+echo Zeichenfolge eingeben:
+set i="$<"
+switch ("$i")
+ case  [?]:  # [?] sonst bedeutet ? jedes Einzelzeichen 
+	echo "$i"
+	echo Test1
+	breaksw
+ case [*]:  # [*] sonst bedeutet * jede sonstige Zeichenfolge 
+	echo "$i"
+	echo Test2
+	breaksw
+ case  [[]:  # [[] sonst mit [ Beginn einer Menge 
+	echo "$i"
+	echo Test3
+	breaksw
+ case  ]: 
+	echo "$i"
+	echo Test4
+	breaksw
+ case  "'": 
+	echo "$i"
+	echo Test5
+	breaksw
+ case  '"': 
+	echo "$i"
+	echo Test6
+	breaksw
+ case  ! : 
+	echo "$i"
+	echo Test7
+	breaksw
+ case  '$' : 
+	echo "$i"
+	echo Test8
+	breaksw
+ case  "#" : 
+	echo "$i"
+	echo Test9
+	breaksw
+ case  & : 
+	echo "$i"
+	echo Test10
+	breaksw
+ case  "`": 
+	echo "$i"
+	echo Test11
+	breaksw
+ case  "\\" : 
+	echo "$i"
+	echo Test12
+	breaksw
+ case  \~ : 
+	echo "$i"
+	echo Test13
+	breaksw
+ case [0-9]:  # nur einstellige Zahlen
+	echo einstellige Zahl $i
+	breaksw
+ case [0-9][0-9]: # nur zweistellige Zahlen
+        echo zweistellige Zahl $i
+ 	breaksw
+ case [0-9]*:
+	echo Ziffer an erster Position $i
+	# Nicht-Ziffern erkennen
+	set a = "`echo '$i' | grep \[^0-9\] `" 
+	if ("$a" != "") then
+	# es sind Nicht-Ziffern enthalten
+	# Ziffern herausfiltern 
+	   set b = `echo "$i" | sed 's/[0-9]//g'`
+	   echo enthaltene Nicht-Ziffern: $b
+	# Nicht-Ziffern herausfiltern
+	   set a = `echo "$i" | sed 's/[^0-9]//g'`
+	   echo enthaltene Ziffern: $a
+	else
+   	   echo Es sind nur Ziffern enthalten
+	endif
+	breaksw
+ case *[0-9]:
+        echo Ziffer an letzter Position $i
+	# Ziffern erkennen
+	set a = "`echo '$i' | grep \[0-9\] `" 
+	if ("$a" != "") then
+	# es sind Ziffern enthalten
+	# Ziffern herausfiltern 
+	   set b = `echo "$i" | sed 's/[0-9]//g'`
+	   echo enthaltene Nicht-Ziffern: $b
+	# Nicht-Ziffern herausfiltern
+	   set a = `echo "$i" | sed 's/[^0-9]//g'`
+	   echo enthaltene Ziffern: $a
+	else
+   	   echo Es sind keine Ziffern enthalten
+	endif
+	breaksw
+ case d :
+ case [a-c]: 
+	echo $i
+	echo Auswahl1
+	breaksw
+ case -[pP]:  # Option -p oder -P
+	echo $i
+	echo Auswahl2
+	breaksw
+ case -*:     # Option -*
+	echo "$i"
+	echo Auswahl3
+	breaksw
+ case ?:
+	echo "$i"
+	echo sonstiges Einzelzeichen
+	breaksw
+ default: 
+	echo "$i"
+	echo default
+	# Ziffern erkennen
+	set a = "`echo '$i' | grep \[0-9\] `" 
+	if ("$a" != "") then
+	# es sind Ziffern enthalten
+	# Ziffern herausfiltern 
+	   set b = `echo "$i" | sed 's/[0-9]//g'`
+	   echo enthaltene Nicht-Ziffern: $b
+	# Nicht-Ziffern herausfiltern
+	   set a = `echo "$i" | sed 's/[^0-9]//g'`
+	   echo enthaltene Ziffern: $a
+	else
+   	   echo Es sind keine Ziffern enthalten
+	endif
+	breaksw
+endsw
+
+

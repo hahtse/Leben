@@ -1,0 +1,14 @@
+10. Uebung zum Fach Betriebssysteme I
+
+Erstellen Sie ein C-Programm, das die Anzahl der in einer Sekunde 
+ausgefuehrten Primzahl-Berechnungen bestimmt.
+Die Anzahl der Primzahl-Berechnungen je Sekunde ist unter Ver-
+wendung des Intervallzeitgebers ITIMER_REAL und danach mit dem 
+Intervallzeitgeber ITIMER_VIRTUAL zu messen. Fuer jeden der beiden 
+Intervallzeitgeber sind 10 Messwerte unter vergleichbaren 
+Bedingungen, d. h. mit gleichem Startwert der Laufvariablen zu 
+ermitteln und daraus der Mittelwert zu berechnen. 
+Die gemessenen Werte und die Mittelwerte sind auszugeben.
+
+Abgabetermin: 17.12.2010
+

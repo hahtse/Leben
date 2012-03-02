@@ -1,0 +1,93 @@
+Message Queues (IPC - Paket)
+
+Nachrichten-Warteschlangen zur Kommunikation von Prozessen
+
+1. benoetigtes .h-File:
+   #include <sys/msg.h>
+
+2. Anlegen einer Queue
+
+   int msqid;     Queue-ID-Variable
+   int msqflag;   Flags und Zugriffsrechte
+   key_t msqkey;  eindeutige Queue-Kennung
+   msqkey = 17;   willkuerlicher Wert >0 oder 
+                  ftok() verwenden s. u.
+   msqflag = IPC_CREAT | 0644;
+             IPC_CREAT - neue Queue anlegen, falls fuer
+                  diesen msqkey noch nicht vorhanden
+             0644 Zugriffsrechte analog zu Files
+                  (user group other)
+
+   Queue anlegen:
+   bzw. ID einer mit diesem msqkey bereits angelegten Queue 
+   zurueckgeben
+   msqid = msgget (msqkey, msqflag);
+           msqid >= 0 systemweit eindeutiger ID
+                  < 0 Fehler
+
+3. Senden / Emfangen von Nachrichten
+
+   Nachrichtenstruktur selbst zu definieren:
+   struct msgtyp {    frei waehlbarer Typbezeichner
+     long mtype;      1. Komponente Typ long
+     char mtext[100]; ab 2. Komponente Typ und Struktur
+   };                 frei waehlbar
+   struct msgtyp msg;
+   size_t len;
+   int l, rc, flag;
+   long mtyp;
+
+   Nachricht senden:
+   msg.type = 1;       beliebiger Wert > 0 zur Kennzeichnung
+                       der Nachricht
+   len = strlen(msg.text)+1;  Anzahl der zu sendenden
+                       Nachrichtenbytes (ohne msg.mtype)
+   len = 0;            moeglich - nur msg.mtype senden
+   flag = 0;           blockierende Arbeitsweise der Funktion 
+                       warten auf Ressourcen bzw. Nachricht
+   flag = IPC_NOWAIT;  nicht blockierend - Fehlercode 
+                       auswerten
+   Nachricht in Queue stellen:
+   rc = msgsnd (msqid, &msg, len, flag); 
+        rc == 0  Senden ohne Fehler
+            < 0  Fehler - Fehlercode auswerten
+
+
+   Nachricht empfangen:
+   len = sizeof(msg.mtext);  maximale Anzahl erwartete
+                             Datebytes
+   mtyp = 0;           naechste Nachricht aus Queue anfordern
+   mtyp = wert;        wert > 0 naechste Nachricht mit 
+                       msg.mtype == wert  suchen
+   mtyp = wert;        wert < 0 naechste Nachricht mit
+                       msg.mtype <= | wert |  suchen
+   Nachricht aus Queue anfordern:
+   l = msgrcv (msqid, &msg, len, mtyp, flag);
+       l >= 0  Anzahl der empfangenen Datenbytes (<= len)
+          < 0  Fehler - Fehlercode auswerten
+
+4. Steueroperation
+
+   Queue aus System entfernen (bleibt sonst bestehen):
+   int rc;
+   rc = msgctl (msqid, IPC_RMID, 0);
+        rc == 0  Operation ohne Fehler
+            < 0  Fehler - Fehlercode auswerten
+
+   Statusinformation:
+   struct msqid_ds buf;  vordefinierte Struktur
+   rc = msqctl (msqid, IPC_STAT, &buf);
+        buf enthaelt bei rc == 0 u. a.:
+        buf.msg_qbytes   maximale Byteanzahl der Queue
+        buf.msg_cbytes   aktuelle Byteanzahl der Queue
+        buf.msg_qnum     aktuelle Nachrichtenanzahl
+
+5. IPC-key-Erzeugung
+
+   key_t key;
+   char fname[100];  Filename, auf das Zugriffsrecht besteht
+   int id;           Wert im Bereich 1,...,255 modifiziert 
+                     key-Erzeugung
+   key = ftok (fname, id);
+         key > 0     systemweit (nahezu) eindeutiger key
+             < 0     Fehler - Fehlercode auswerten

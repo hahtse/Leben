@@ -1,0 +1,23 @@
+﻿7. Uebung zum Fach Betriebssysteme I
+
+Erstellen Sie drei C-Programme, in denen ein File durch zwei 
+Child-Prozesse erstellt und ausgegeben wird.
+Im Parent-Prozess ist der Filename als Kommandozeilenargument
+zu uebernehmen oder, falls nicht angegeben, ueber stdin 
+einzugeben. Wenn das File nicht existiert, ist das File anzulegen.
+Wenn das File bereits existiert, ist nach einer entsprechenden
+Anfrage das File neu anzulegen oder zum Erweitern zu oeffnen.
+Danach ist der 1. Child-Prozess einzurichten, in dem ein Programm 
+gestartet wird, das den Fileinhalt ueber Eingaben von stdin 
+erzeugt. Filename und File-Deskriptor sind als Argumente zu 
+uebergeben.
+Nach Ende des Child-Prozesses ist das File zum Lesen zu oeffnen 
+und der 2. Childprozess einzurichten, in dem ein Programm 
+gestartet wird, das den Fileinhalt anzeigt. Filename und File-
+Deskriptor sind als Argumente zu uebergeben.   
+Abschließend ist der Ende-Statuswert beider Child-Prozesse auszu-
+geben.
+Zur Bearbeitung der Programme ist make zu verwenden.
+
+Abgabetermin: 26.11.2010
+

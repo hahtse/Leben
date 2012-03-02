@@ -1,0 +1,60 @@
+Ausfuehrung von Programmen / Kommandos
+
+1. Funktion execv()
+
+#include <unistd.h>
+char progname[100]; Name des aufzurufenden Programms
+char *argv[4];      Pointerfeld fuer die Adressen der
+char arg1[20], arg2[20];  zu uebergebenden Argumente
+
+strcpy (progname, Name); Programmname als Zeichenkette
+strcpy (arg1, Argument1); 1. Argument als Zeichenkette
+strcpy (arg2, Argument2); 2. Argument als Zeichenkette
+argv[0] = progname;  Pointer auf Programmname
+argv[1] = arg1;      Pointer auf 1. Argument
+argv[2] = arg2;      Pointer auf 2. Argument
+argv[3] = NULL;      Ende der Pouinterliste
+
+execv(progname, argv);
+
+Es wird der Programmcode des angegebenen Programms geladen.
+Nach dem Laden wird das geladene Programm am Eintrittspunkt 
+(main()- Funktion) gestartet. Dabei bleibt die Systemumgebung
+des aufrufenden Prozesses bestehen (gleiche PID, geoeffnete 
+Files). Da der bisherige Speicherinhalt durch den neuen 
+Programmcode ersetzt wird, sind die Variablen und andere 
+Objekte nicht mehr vorhanden. Eine Rueckkehr in das aufrufende 
+Programm ist deshalb auch nicht moeglich.
+Eine Rueckkehr von execv() in das aufrufende Programm erfolgt 
+nur im Fehlerfall (z. B. falscher Programmname). Die Fehler-
+ursache kann mit perror() angezeigt werden.
+Argumente sind als Zeichenketten zu bereitzustellen. Es koennen 
+auch weniger oder mehr Argumente uebergeben werden.
+
+
+2. Funktion execl()
+
+#include <unistd.h>
+char progname[100]; Name des aufzurufenden Programms
+char arg1[20], arg2[20];  zu uebergebende Argumente
+
+strcpy (progname, Name); Programmname als Zeichenkette
+strcpy (arg1, Argument1); 1. Argument als Zeichenkette
+strcpy (arg2, Argument2); 2. Argument als Zeichenkette
+
+execl(progname, progname, arg1, arg2, NULL);
+
+
+3. Funktion system()
+
+#include <stdlib.h>
+int status;
+char progname[100];  Programmname und Argumente als 
+                Zeichenkette (Notation wie als Kommandozeile)
+
+status = system( progname );
+
+Waehrend der Ausfuehrung des aufgerufenen Programms wartet das 
+aufrufende Programm auf seine Beendigung. Als Funktionswert 
+wird der Ende-Status des aufgerufenen Programms zurueck-
+gegeben.

@@ -1,0 +1,26 @@
+2. Uebung zum Fach  Betriebssysteme II
+
+Es sind zwei C-Programme zu erstellen, die mittels getmsg() / putmsg() 
+oder getpmsg() / putpmsg() eine Kommunikation ueber eine benannte 
+Pipe durchfuehren.
+
+Das Sender-Programm soll ueber stdin eingegeben Zeilen in eine benannte 
+Pipe speichern. Ctrl-D beendet den Eingabe-Datenstrom und das Sender-
+Programm. Beginn und Ende eines Datenstroms ist durch geeignete Steuer-
+informationen zu kennzeichnen. Das Sender-Programm soll mehrfach 
+parallel gestartet werden koennen, wobei alle Sender dieselbe Pipe 
+benutzen.
+Das Empfaenger-Programm soll die aus der Pipe uebernommenen Daten-
+stroeme der verschiedenen Sender unterscheiden koennen und in separaten 
+Files zwischenspeichern.  Am Ende eines Datenstroms ist das betreffende 
+File auf stdout auszugeben. 
+Mit Ctrl-C ist das Beenden des Empfaenger-Programms einzuleiten. Danach
+soll ein neu gestarteter Sender abgewiesen werden. Das Empfaenger-
+Programm soll aber erst beendet werden, wenn alle Datenstroeme durch den 
+zugehoerigen Sender beendet worden sind.
+Zur Uebertragung der Steuerinformationen ist ein entsprechender Steuer-
+bereich zu verwenden, d. h. in den Daten sollen keine Steuerinfor-
+mationen enthalten sein.
+
+Abgabetermin: 01.04.2011
+

@@ -1,0 +1,26 @@
+1. Uebung zum Fach "Betriebssysteme II"
+
+Erstellen Sie zwei C-Programme, die eine Kommunikation ueber 
+eine Message Queue durchfuehren.
+
+In einem Sender-Programm werden Zeichen ueber stdin eingegeben 
+und zeilenweise an eine Message Queue uebergeben. Ctrl-D beendet 
+den Eingabe-Datenstrom und das Sender-Programm. Damit das Sender-
+Programm mehrfach parallel gestartet werden kann, sollen die an 
+die Queue uebergebenen Nachrichten eindeutige Kennzeichen 
+erhalten. 
+Ein Empfaenger-Programm uebernimmt die Daten aus der Queue. Die 
+von den verschiedenen Sender-Programmen stammenden Datenstroeme 
+werden anhand des Kennzeichens unterschieden und in separaten 
+Files (z. B. Filename aus dem Kennzeichen bilden) gespeichert. 
+Wenn ein Sender-Programm beendet wird, soll eine entsprechende 
+Information an das Empfaenger-Programm gesendet werden. Wenn 
+alle Sender-Programme beendet sind, wird die Queue vom Empfaenger-
+Programm beseitigt und das Programm beendet.
+
+Die Aufrufe von Systemfunktionen sind auf fehlerfreie Ausfuehrung 
+zu ueberpruefen. (bei Fehler Ausgabe einer Nachricht mit 
+perror() ).
+
+Abgabetermin: 25.3.2011
+

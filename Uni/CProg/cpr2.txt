@@ -1,0 +1,38 @@
+2. Uebung zum Fach C-Programmierung
+
+
+Erstellen Sie ein C - Programm, das ueber stdin Zeichenketten 
+einliest. Die Zeichenketten sind in Bereiche zu kopieren, die 
+durch dynamische Speicheranforderung in der Laenge der je-
+weiligen Zeichenkette bereitzustellen sind. Die Zeiger auf 
+diese Bereiche sind in ein Pointerfeld geeigneter fester 
+Groesse einzutragen.
+
+Die eingelesenen Zeichenketten sind in lexikographischer Folge 
+zu sortieren. Das Umordnen der Reihenfolge soll dabei nicht 
+durch Verschiebung der Zeichenketten erfolgen, sondern durch 
+Umordnung der zugehoerigen Pointer.
+Die sortierten Daten sind auf stdout auszugeben.
+Die Zeichenketten sind sequentiell zu durchmustern, ob eine 
+im Programm als Konstante angelegte Zeichenfolge (als Teil-
+folge) enthalten ist (die Zeichenfolge kann evtl. in mehreren 
+Zeichenketten enthalten sein). Die Zeichenkette, in der die 
+Teilfolge gefunden wird, ist auszugeben.
+
+
+Verwenden Sie als Testdaten die im File 
+/home/reimann/pub/inb09.txt oder /home/reimann/pub/mib09.txt  
+gespeicherte Namensliste mittels Fileumlenkung zur Eingabe 
+ueber stdin. 
+
+
+Hinweis: Zur Suche einer Teilfolge in einer Zeichenkette kann
+         die Funktion strstr() benutzt werden (Anwendung siehe
+         Manual).
+	
+
+
+
+
+Abgabetermin: 23.04.2010
+

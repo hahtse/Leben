@@ -1,0 +1,16 @@
+1. Uebung
+
+Die Daempfung eines Ethernet-UTP-Kabels vom Typ 10Base T
+darf bei 10 MHz maximal 11,5 dB auf 100 m betragen. 
+Welchen Wert hat die Relation von ausgekoppelter zu einge-
+koppelter Leistung? 
+Welche Ausgangsspannung ergibt sich daraus bei einem Ein-
+gangs-Spannungspegel von 2,05V ?
+Die Signalgeschwindigkeit betraegt auf diesem Medium 
+0,585 c (c = Lichtgeschwindigkeit). Welche Signallaufzeit 
+durch ein Segment mit der Maximallaenge von 100 m ergibt 
+sich?
+Wieviel Bits koennen sich bei einer Datenrate von 10Mbit/s 
+gleichzeitig auf einem Segment mit 100 m Laenge befinden?
+
+

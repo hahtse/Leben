@@ -1,0 +1,3 @@
+vhdl work "/home/hc/HET/COY_GPU.vhd"
+vhdl work "/home/hc/HET/CoyALU.vhd"
+vhdl work "/home/hc/HET/tb_COY_ALU.vhd"

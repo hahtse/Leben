@@ -1,0 +1,31 @@
+11. Uebung zum Fach Betriebssysteme I
+
+Erstellen Sie ein C-Programm, das eine Datenuebertragung zwischen 
+zwei Prozessen ueber unbenannte Pipes ausfuehrt.
+
+Durch den Parent-Prozess sind zwei Child-Prozesse zu erzeugen und 
+zu beiden Child-Prozessen je eine unbenannte Pipe anzulegen. In 
+den Child-Prozessen werden auf stdin eingegebene Zeichenfolgen 
+ueber die Pipe zum Parent-Prozess uebertragen, der diese ueber 
+stdout ausgibt. Der Parent-Prozess liest also im Wechsel von den 
+beiden Pipes.
+Da fuer die drei Prozesse nur ein Fenster fuer die Ein- und Aus-
+gaben zur Verfuegung steht, sollen die Ein- und Ausgaben der 
+Child-Prozesse durch den Parent-Prozess gesteuert werden. Dazu 
+sendet der Parent-Prozess zunaechst eine Nachricht ueber die Pipe, 
+von der als naechstes Daten gelesen werden sollen. Das bedeutet, 
+dass der Child-Prozess immer zuerst diese Nachricht von der Pipe 
+lesen muss, bevor er Ein- und Ausgaben ueber das Fenster ausfuehrt 
+und die eingegebenen Daten zum Parent-Prozess sendet.
+Mit Ctrl-D wird im Child-Prozess die Eingabe ueber stdin beendet. 
+Die betreffende Pipe wird geschlossen und der Child-Prozess be-
+endet. Im Parent-Prozess ist entsprechend auf das Schliessen der 
+Pipe zu reagieren, indem von dem betreffenden Child-Prozess keine 
+Daten mehr angefordert werden.
+Abschliessend ist im Parent-Prozess der Ende-Status der Child-
+Prozesse mit wait() zu testen und auszugeben.
+Die Aufrufe von Systemfunktionen sind auf fehlerfreie Ausfuehrung 
+zu ueberpruefen und bei Fehler eine Nachricht mit perror() 
+auszugeben.
+
+Abgabetermin: 07.01.2011

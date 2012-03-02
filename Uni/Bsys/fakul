@@ -1,0 +1,42 @@
+#! /bin/csh
+
+if($#argv<1)then
+	echo 'Bitte Zahl eingeben: '
+	set zahl = $<
+	set a = "`echo '$zahl' | grep \[^0-9\] `" 
+	if ("$a" != "") then
+ 		echo Es sind Nicht-Ziffern enthalten: $a
+		exit 1
+	else
+  		echo Es sind nur Ziffern enthalten
+	endif
+else
+	set zahl = $argv[1]
+	set a = "`echo '$zahl' | grep \[^0-9\] `" 
+	if ("$a" != "") then
+ 		echo Es sind Nicht-Ziffern enthalten: $a
+		exit 1
+	else
+  		echo Es sind nur Ziffern enthalten
+	endif
+endif
+
+set ergebnis = 1
+set zwischen = 1
+
+while($zahl != 0)
+	@ zwischen = ($zahl * $ergebnis)
+	if($zwischen / $zahl == $ergebnis)then
+		set ergebnis = $zwischen
+		@ zahl--
+	else
+		echo "Bereichsueberschreitung"
+		exit 1
+	endif
+end
+
+echo $ergebnis
+
+exit 0
+
+	

@@ -1,0 +1,24 @@
+3. Uebung zum Fach Rechnernetze II
+
+
+Es ist ein Client-Server-Paar fuer TCP zu erstellen, mit dem 
+Files zwischen Client- und Server-Host uebertragen werden 
+koennen. Der Aufruf des Serverprogramms soll dabei ueber den 
+Internetdaemon inetd erfolgen.
+Beim Client-Aufruf sollen Server-Adresse, Filename und Ueber-
+tragungsrichtung angegeben werden koennen. Dabei sind fuer 
+folgende Faelle entsprechende Reaktionen vorzusehen:
+* Das zu uebertragende File existiert nicht.
+* Falls das Zielfile bereits existiert, soll das Ueber-
+  schreiben zuvor bestaetigt werden.
+Das Serverprogramm ist zunaechst weitgehend ohne inetd-
+Einsatz zu testen. 
+Zum Test mit inetd ist der Quelltext des Serverprogramms auf 
+den Serverhost zu uebertragen und dort zu uebersetzen. Als
+Serverhost kann der Host sun610 verwendet werden.
+Weiterhin sind folgende zusaetzliche Moeglichkeiten vorzusehen:
+* Angabe der Server-Adresse beim Client-Aufruf als IP-Adresse 
+  oder als Hostname.
+* Ausgabe von IP-Adresse, Hostname und Portnummer des Clients, 
+  Name des zu uebertragenden Files und der Uebertragungsrichtung 
+  durch den Server in ein Log-File.

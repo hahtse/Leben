@@ -1,0 +1,34 @@
+3. Uebung zum Fach Betriebssysteme I
+
+
+Erstellen Sie fuer die C-Shell eine Kommandoprozedur zur Suche 
+eines Files ab einem vorgegebenen Verzeichnis. Aufruf mit:
+
+   suche filename1 [-f filename2] [-p pfad]
+
+Falls die Anzahl der Argumente beim Kommandoaufruf nicht 1, 3 
+oder 5 betraegt, soll ein Benutzungshinweis fuer den Kommandoauf-
+ruf ausgegeben werden. Die in [] angegebenen Argumentpaare sind 
+optional, ihre Reihenfolge soll vertauschbar sein. Bei falschen 
+Optionsangaben soll ebenfalls ein Benutzungshinweis ausgegeben 
+werden.
+Falls die Option -p nicht angegeben wurde, ist die Suche nach 
+filename1 standardmaessig im Home-Directory zu beginnen. Wenn 
+die Option -p als 2. oder 4. Argument vorhanden ist, soll die 
+Suche aber bei dem als 3. bzw. 5. Argument angegebenen Pfad 
+beginnen. 
+Zur Suche im Filesystem ist das find-Kommando mit folgenden 
+Parametern zu verwenden:
+   find pfad -name filename1
+Dabei ist  pfad  das Verzeichnis, bei dem die Suche nach 
+filename1  starten soll.
+Falls die Option -f nicht angegeben wurde, sind alle Ausgaben 
+auf dem Bildschirm auszugeben. Ist die Option -f als 2. oder 
+4. Argumentangegeben, dann sollen alle Ausgaben (stdout und 
+stderr) in das im 3. bzw. 5. Argument angegebene File umgelenkt 
+werden. Der Inhalt dieses Files ist nach dem gesuchten 
+Filenamen mittels  grep  zu filtern. 
+
+
+Abgabetermin: 29.10.2010
+

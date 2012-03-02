@@ -1,0 +1,79 @@
+Signale - Ereignismeldungen
+
+werden an Prozesse gesendet, wenn ein entsprechendes Ereignis 
+eintritt (z. B. Ablauf eines Zeitintervalls, bestimmte 
+Programmfehler, Ereignismeldung von einem anderen Prozess)
+Signale sind gekennzeichnet durch die Signalnummer (ganze Zahl >0)
+fuer die Signalnummer sollten symbolische Werte verwendet werden 
+Bezeichnungen siehe: man signal.h
+asynchrone Signale - Ursache liegt ausserhalb des Prozesses 
+          (z. B. Zeitgebersignal, Signal von anderem Prozess)
+          Unterbrechung zu beliebigem Zeitpunkt an beliebiger 
+          Stelle im Programmablauf
+          Programmfortsetzung nach Signalbehandlung moeglich
+synchrone Signale - Ursache liegt im Prozess (Programmfehler)
+          Unterbrechung an bestimmter Stelle im Programmablauf
+          Programmfortsetzung an Unterbrechungsstelle nicht  
+          moeglich
+
+1. Behandlung von Signalen
+
+Standardbehandlung - bei den meisten Signalen Prozess-Abbruch
+Signal ignorieren  - bei vielen Signalen moeglich (nicht bei
+                     synchronen Signalen)
+eigene Signalbehandlung - in einer Signal-Behandlungsfunktion
+
+Anmeldung einer Signal-Behandlungsfunktion mit
+Funktionen des vereinfachten Nutzer-Interfaces zur Modifikation 
+der sog. Signal-Disposition
+
+   #include <signal.h>
+   int signr;
+   signr = SIGINT;   Bsp. fuer Signalnr. 2
+
+Ruecksetzen auf die Standardbehandlung:
+   signal (signr, SIG_DFL);    oder
+   sigset (signr, SIG_DFL);
+
+Signal ignorieren:
+   signal (signr, SIG_IGN);    oder
+   sigset (signr, SIG_IGN);    oder
+   sigignore (signr);
+
+Anmeldung einer Signal-Behandlungsfunktion:
+   Die angemeldete Signalbehandlungsfunktion wird vom System
+   beim Eintreffen des Signals aufgerufen.
+  
+  Definition der Signalbehandlungsfunktion:
+   Die Signalbehandlungsfunktion ist eine Interruptfunktion 
+   und sollte deshalb moeglichst wenige Operationen ausfuehren 
+   (z. B. keine Fileverarbeitung oder Prozesserzeugung).
+   
+   void sigfkt (int signr) { die Signalnr. wird uebergeben
+     Funktionsname beliebig
+     Funktionstyp und Parametertyp sind vorgegeben
+     Behandlung (kann auch leer sein)
+     return;     Fortsetzung an der Unterbrechungsstelle
+   }
+  Anmeldung der Funktion:
+   signal (signr, sigfkt);
+     Anmeldung der Funktion fuer einmalige Signal-Behandlung,
+     danach gilt wieder die Standardbehandlung
+     oder
+   sigset (signr, sigfkt);
+     Anmeldung der Funktion fuer mehrmalige Signal-Behandlung
+   Die genauen Unterschiede sind abhaengig vom System und dessen
+   Versionsnummer (z. B. Solaris / Linux)
+
+2. Erzeugung eines Signals
+
+   durch Bedieneraktion 
+         spezielle Tastenkombination (Ctrl-C, Ctrl-Z) oder
+         Kommando:  kill -Signalnr. Prozessnr.
+   durch spezielles Ereignis z. B. Zeitgeber, Child-Proz.-Ende,
+         Speicherschutzverletzung u. a. Programmfehler
+   durch Systemfunktion kill() z. B.
+         int rc, signr;
+         signr = SIGINT;   Bsp. fuer Signalnr. 2
+         rc = kill (Prozessnummer, signr);
+

@@ -1,0 +1,59 @@
+Earliest Deadline First (EDF)
+
+Verfahren:
+Wird ein Task ablaufwillig, so werden für alle Tasks die Zeiträume bis zu tzi (Deadline) ermittelt. Der Task mit dem kürzesten Abstand erhält diee höchste Priorität (dynamische Priorität).
+
+weitere Verfahrene:
+	Least Laxity First
+	Li = tzi - (t+tvi)
+
+Synchronisation
+Gründe für Synchronisation
+	- Zugriff auf gemeinsame Daten
+	- Benutzung von Geräten
+	- Aufruf von gemeinsamen Programmen
+Arten der Synchronisation
+	- Sperrsynchronisation, Gegenseitiger Ausschluss
+		Mutual Exclusion (Mutex)
+	- Reihenfolgesynchronisation
+
+Semaphore
+
+class Semaphore{
+public:
+	Semaphore(int n){
+		zaehl = n;
+	}
+	P(){
+		zaehl--;
+		if(zaehl < 0)
+			// Task blockieren
+	}
+	V(){
+		zaehl++;
+		if(zaehl < 1)
+			//Task freigeben
+	}
+private:
+	int zahl;
+}
+
+P() und V() müssen atomar laufen.
+
+KW 54
+
+weiteres Konzept:
+Monitore
+
+geschützte Objekt werden über Zugriffsfunktionen gekapselt
+
+Kommunikation
+	- gemeinsamer Speicher
+	- Nachrichten
+Für Echtzeitsysteme
+	- Priorisierung (Prioritäteninversion beachten)
+	- Timeouts
+
+Arten der Kommunikation
+-Synchrone (blockierend)
+-Asynchrone Kommunikation (nicht blockierend)

@@ -1,0 +1,143 @@
+Pipes
+
+E/A-Funktionen fuer Nachrichten mit Daten- und Steuer-Anteil
+
+1. Voraussetzungen
+
+   Die Funktionen sind nur fuer Pipes anwendbar.
+   Sie sind nicht in allen Systemversionen implementiert
+   (z. B. nicht fuer Linux).
+   #include <stropts.h>
+   dort definierte Struktur:
+   struct strbuf {
+     int  maxlen;  maximale Laenge - Groesse des Empfangsbereichs
+     int  len;     aktuelle Laenge
+     char *buf;    Adresse der Daten bzw. Steuerinformation
+   };
+
+
+2. Funktionen getmsg()/putmsg()
+
+   Pipe anlegen, oeffnen und schliessen  s. a.  pipes1.txt   
+   struct strbuf ctl, data;  Strukturen fuer Steuer- bzw. 
+                             Datenteil
+   char cbuf[100], dbuf[100];  E/A-Bereiche fuer Steuer-
+                               Information bzw. Daten
+   int fd, rc, flags;
+
+   Senden einer Nachricht
+     ohne Steuerinformation
+       Nachricht in  dbuf  bereitstellen
+       flags = 0;  normale Nachricht, ohne Vorrang
+                   es koennen mehrere Nachrichten in  die
+                   Pipe gesendet werden
+       data.len = strlen(dbuf) + 1;
+       data.buf = dbuf;
+       rc = putmsg (fd, NULL, &data, flags);
+            rc == 0  kein Fehler
+                < 0  Fehler
+     mit Steuerinformation
+       Nachricht in  dbuf  bereitstellen
+       Steuerinformation in  cbuf  bereitstellen
+         z. B.  cbuf[0] = 1;
+       flags = 0;  normale Nachricht, ohne Vorrang
+       data.len = strlen(dbuf) + 1;  Byteanzahl
+       data.buf = dbuf;
+       ctl.len  = 1;   Byteanzahl der Steuerinformation
+       ctl.buf  = cbuf;
+       rc = putmsg (fd, &ctl, &data, flags);
+            rc == 0  kein Fehler
+                < 0  Fehler
+       auch nur Steuerinformation ohne Datenteil moeglich:
+         data.len = -1;   oder
+         statt Parameter  &data -> NULL angeben
+
+   Empfang einer Nachricht (mit oder ohne Steuerinformation)
+     flags = 0;
+     ctl.maxlen  = sizeof(cbuf);  verfuegbare Bereichsgroesse
+     ctl.buf     = cbuf;          Bereichsadresse
+     data.maxlen = sizeof(dbuf);
+     data.buf    = dbuf;
+     rc = getmsg (fd, &ctl, &data, &flags);
+          rc == 0  komplette Nachricht empfangen
+              < 0  Fehler
+             == MOREDATA  noch weiter Daten, Empfang durch
+                          naechstes getmsg()
+             == MORECTL   noch weiter Steuerinformation, 
+                          Empfang durch naechstes getmsg()
+             == MOREDATA | MORECTL  Kombination
+          data.len  Laenge der empfangenen Daten bzw. 
+          ctl.len   Steuerinformation
+            == -1   keine Daten bzw. Steuerinformation
+          data.len == 0 && ctl.len == 0 && rc == 0
+                    Sender hat die Pipe geschlossen        
+                            
+   Nachricht mit hoher Prioritaet
+     wird beim Empfang zuerst uebergeben
+     jeweils nur 1 Nachricht kann in der Pipe stehen
+     Senden
+       flags = RS_HIPRI;  Steuerteil muss angegeben werden
+       putmsg()  s.o.
+     Empfang
+       flags = 0;  beliebige Nachricht emfangen
+       getmsg (. . ., &flags); 
+             flags == 0  normale Nachricht
+             flags == RS_HIPRI  Nachricht mit hoher Prioritaet
+
+       flags = RS_HIPRI;  
+       getmsg (. . ., &flags);
+             nur Nachricht mit hoher Prioritaet wird empfangen
+             andere Nachrichten bleiben in der Pipe
+
+
+3. Funktionen putpmsg()/getpmsg()
+
+   Pipes mit Nachrichten verschiedener Prioritaet 
+   (Prioritaetsbaender)
+   mit bzw. ohne Steuerinformation analog zu getmsg()/putmsg()
+   Pipe anlegen, oeffnen und schliessen  s. a.  pipes1.txt   
+   struct strbuf ctl, data;  Strukturen fuer Steuer- bzw. 
+                             Datenteil
+   char cbuf[100], dbuf[100];  E/A-Bereiche fuer Steuer-
+                               Information bzw. Daten
+   int fd, rc, flags, band;
+
+   Senden einer Nachricht
+     in einem Prioritaetsband
+       flags = MSG_BAND;  Fehler bei flags = 0;
+       band  = 3;  z. B. Prioritaetsband 3
+                   Bandnummer 0 . . . 255
+                   hohe Nummer = hohe Prioritaet
+       Daten-/Steuerteil s. putmsg()
+       rc = putpmsg (fd, &ctl, &data, band, flags);
+            rc  analog putmsg()
+     mit hoher Prioritaet  
+       wird beim Empfang zuerst uebergeben
+       jeweils nur 1 Nachricht kann in der Pipe stehen
+       flags = MSG_HIPRI;
+       band  = 0; Steuerteil muss angegeben werden
+       putpmsg()  s.o.
+
+   Empfang einer Nachricht
+     beliebige Nachricht
+       flags = MSG_ANY;
+       band  = 0;
+       Daten-/Steuer-Parameter s. getmsg()
+       rc = getpmsg (fd, &ctl, &data, &band, &flags);
+            rc, ctl.len, data.len  analog getmsg()
+            band und flags  werden entsprechend der 
+                 empfangenen Nachricht zurueckgegeben
+     Nachrichten ab einer bestimmten Prioritaet
+       flags = MS_BAND;
+       band  = 9;(Bsp.)  Nachricht mit hoher Prioritaet
+                         oder aus Bandnummer >= 9
+       Daten-/Steuer-Parameter s. getmsg()
+       rc = getpmsg (fd, &ctl, &data, &band, &flags);
+            band und flags  werden entsprechend der 
+                 empfangenen Nachricht zurueckgegeben
+     nur Nachricht mit hoher Prioritaet
+       flags = MSG_HIPRI;
+       band  = 0;  
+       Daten-/Steuer-Parameter s. getmsg()
+       rc = getpmsg (fd, &ctl, &data, &band, &flags);
+

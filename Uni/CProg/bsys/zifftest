@@ -1,0 +1,10 @@
+#! /bin/csh    
+echo Zeichenfolge eingeben
+set e = $<
+# Nicht-Ziffern erkennen
+set a = "`echo '$e' | grep \[^0-9\] `" 
+if ("$a" != "") then
+   echo Es sind Nicht-Ziffern enthalten: $a
+else
+   echo Es sind nur Ziffern enthalten
+endif

@@ -1,0 +1,16 @@
+6. Uebung
+
+Welche effektive Datenrate in Bit/s ergibt sich bei der Uebertragung 
+von 64 Datenbytes Nutzinformation (in 1 Datenframe) mit einer 
+Schrittgeschwindigkeit von 1200 Bd und 4 moeglichen Zustaenden je 
+Schritt fuer:
+a) das Start - Stop - Verfahren: 
+   je Datenframe 4 Bytes zur Uebertragungssteuerung, 
+   je Byte 8 Daten-Bits, 1 Paritaetsbit, Stopschrittlaenge 1 Bit
+b) zeichenorientierte synchrone Uebertragung: 
+   je Datenframe 2 Synchronisationsbytes, 4 Bytes zur 
+   Uebertragungssteuerung, je Byte 8 Daten-Bits, 1 Paritaetsbit
+c) bitorientierte synchrone Uebertragung: 
+   je Datenframe 8 Bits zur Synchronisation, 48 Bits zur 
+   Uebertragungssteuerung, 8 Bits Endeflag, 8 Bits je Datenbyte.
+

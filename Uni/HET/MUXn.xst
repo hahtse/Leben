@@ -1,0 +1,5 @@
+set -tmpdir "/home/hc/HET/xst/projnav.tmp"
+set -xsthdpdir "/home/hc/HET/xst"
+elaborate
+-ifn MUXn.prj
+-ifmt mixed

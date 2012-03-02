@@ -1,0 +1,94 @@
+Unix-Domain-DGRAM-Sockets
+
+zur Kommunikation von Prozessen nach dem Client-Server-Prinzip 
+basierend auf special Files
+
+1. benoetigte .h-Files: 
+    #include <sys/types.h> 
+    #include <sys/socket.h> 
+    #include <sys/un.h>
+   Link-Bibliotheken:
+    -lsocket
+
+
+2. Socket-Erzeugung fuer Client und Server
+
+   Socket-Deskriptoren anlegen: 
+    int s;    Socket-Deskriptor-Variable
+    s = socket (AF_UNIX, SOCK_DGRAM, 0); 
+    Adressfamilie   AF_UNIX  (Unix Domain Socket) 
+    Sockettyp       SOCK_DGRAM 
+    Protokollnummer 0   (Standardprotokoll)
+      s <  0  Fehler
+        >= 0  kein Fehler
+
+3. Server-Initialisierung
+
+   Adress-Strukturen anlegen: 
+    struct sockaddr_un server, client; 
+    server.sun_family = AF_UNIX; 
+    strcpy (server.sun_path, Server-Socket-Filename);
+
+   Server-Adress-Struktur mit Socket verbinden:
+    int rc; 
+    unlink (server.sun_path); Socket-File darf noch 
+                              nicht existieren 
+    rc = bind (s, (struct sockaddr*)&server, sizeof(server));
+      rc <  0  Fehler
+         >= 0  kein Fehler, das Socket-File wird angelegt
+
+   Empfang der Client-Anforderung:
+    int clen, l, flag=0;
+    char eab[LEN];  E/A-Bereich
+    clen = sizeof(client); 
+    l = recvfrom (s, eab, sizeof(eab), flag,
+                  (struct sockaddr*)&client, &clen);
+    In die Adress-Struktur client wird Adressinformation des 
+    anfordernden Clients eingetragen - wird zum Senden der
+    Antwort benoetigt.
+
+   Antwort an Client senden:
+    int l, flag=0;
+    char eab[LEN];  E/A-Bereich
+    l = sendto (s, eab, sizeof(eab), flag,
+                (struct sockaddr*)&client, sizeof(client));
+
+4. Client-Initialisierung
+
+   Adress-Strukturen anlegen: 
+    struct sockaddr_un server, client; 
+    server.sun_family = AF_UNIX; 
+    strcpy (server.sun_path, Server-Socket-Filename);
+    client. sun_family = AF_UNIX;
+    strcpy (client.sun_path, Client-Socket-Filename);
+    Der Client-Socket-Filename kann temporaer sein und z. B.
+    mit der Funktion tmpnam() oder mktemp() erzeugt werden.
+
+   Client-Adress-Struktur mit Socket verbinden:
+    int rc; 
+    unlink (client.sun_path); Socket-File darf noch 
+                              nicht existieren 
+    rc = bind (s, (struct sockaddr*)& client, sizeof(client));
+    Das Socket-File wird angelegt. 
+
+   Anforderung an Server senden:
+    int l, flag=0;
+    char eab[LEN];  E/A-Bereich der Laenge LEN
+    l = sendto (s, eab, sizeof(eab), flag,
+                (struct sockaddr*)&server, sizeof(server));
+
+   Empfang der Server-Antwort:
+    int l, flag=0;
+    char eab[LEN];  E/A-Bereich
+    l = recvfrom (s, eab, sizeof(eab), flag, NULL, NULL);
+    Adressinformation des Servers wird nicht benoetigt.
+      l >  0  Anzahl der tatsaechlich gesendeten oder 
+              empfangenen Bytes bzw.
+      l <  0  bei Fehler
+
+5. Uebertragung beenden
+
+    close ( s );
+    Im Gegensatz zu STREAM-Sockets wird dadurch eine wartende 
+    Empfangsfunktion auf der Gegenseite nicht mit der Laenge 0 
+    beendet.

@@ -1,0 +1,35 @@
+2. Uebung zum Fach Rechnernetze II
+
+
+Es ist ein Client-Server-Paar zu erstellen, das die Ueertragung 
+von Datenstroemen von mehreren Cients zum Server mit Hilfe von 
+UDP durchfuehrt.
+Am Client ueber stdin eingegebene Zeichenfolgen werden zum 
+Server gesendet. Um die Uebertragung abzusichern, ist vor jede 
+Nachricht ein Header einzufuegen, in den die Folgenummer der 
+Sendung einzutragen ist.
+Der Server empfaengt die Daten und gibt IP-Adresse und Portnummer 
+des Senders sowie Byteanzahl, Folgenummer und die Nachricht auf 
+stdout aus. Die empfangene Byteanzahl und Folgenummer werden als 
+Quittung an den Client zurueckgesendet.
+Da die Antwort auch von einem anderen Host kommen koennte, prueft 
+der Client, ob die IP-Adresse und die Portnummer des Senders der 
+Quittung mit der IP-Adresse und der Portnummer des Servers ueber-
+einstimmen und die empfangene Byteanzahl und Folgenummer die 
+erwarteten Werte haben. Bei Abweichungen ist eine Fehlermeldung 
+auszugeben und der Datenstrom zu beenden.
+Im fehlerfreien Fall beendet der Client die Uebertragung bei 
+Eingabe von Ctrl-D. Da der Server das Beenden des Clients nicht 
+feststellen kann, ist eine Endemeldung zu senden.
+Da der Client nicht feststellen kann ob der Server aktiv ist, 
+ist das Warten auf die Quittung durch einen Zeitgeber abzusichern.
+Die Beendigung des Servers erfolgt ueber Signalbehandlung nach 
+SIGINT, wenn alle Uebertragungen von Clients beendet worden sind.
+Der Client soll mit einer waehlbaren Server-Adresse arbeiten 
+koennen: 
+- Angabe der Server-Adresse als Kommandozeilen-Argument oder, 
+  falls kein Argument angegeben ist, Abfrage ueber stdin.
+- Angabe der Server-Adresse soll als Hostname oder IP-Adresse 
+  moeglich sein.
+
+

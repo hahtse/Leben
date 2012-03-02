@@ -1,0 +1,112 @@
+Standardfunktionen zur Ein- und Ausgabe
+
+Die Funktionen zur Ein- und Ausgabe ueber das Terminal arbeiten 
+standardmaessig gepuffert, d. h. die eingegebenen Daten stehen 
+erst nach Enter zur Verfuegung, und Ausgabedaten werden erst nach 
+der Ausgabe von Newline bzw. expliziter Pufferlehrung mit 
+fflush(stdout) an das Ausgabegeraet uebergeben. Symbolische 
+Konstanten (z. B. EOF und NULL) und andere Definitionen muessen 
+mit  #include <stdio.h> verfuegbar gemacht werden.
+
+zeichenweise E/A
+Eingabe:   char c;  ( auch int c; moeglich)
+           c = getchar();
+        Es wird jeweils ein eingegebenes Zeichen von stdin 
+        (auch Enter = '\n') uebergeben.
+        Ctrl D  liefert als Funktionswert EOF.
+Ausgabe:   putchar(c);
+        Das in c gespeicherte Zeichen wird auf stdout ausgegeben.
+
+zeilenweise E/A
+Eingabe:   char kette[100], *p;
+           p = fgets(kette, sizeof(kette), stdin);
+        Die eingegebene Zeichenfolge (Eingabe mit Enter abschliessen) 
+        wird in kette gespeichert (einschliesslich '\n') und mit '\0' 
+        abgeschlossen.
+        Ctrl D (keine Zeichen eingegeben!) liefert als Funktionswert 
+        den Pointer NULL .
+Ausgabe:   puts(kette);
+        Die in kette gespeicherte (mit '\0' abgeschlossene) Zeichen-
+        folge wird auf stdout ausgegeben.
+ 
+formatgesteuerte E/A
+Eingabe:   scanf ("format", argumentliste);
+        Die in  format anzugebende Zeichenfolge enthaelt die Konver-
+        tierungsvorschriften fuer die in der argumentliste aufge-
+        fuehrten Eingabevariablen (es sind die Adressen der Variablen 
+        anzugeben !). Jede Konvertierungsvorschrift wird durch das 
+        Zeichen  %  eingeleitet. Bei der Ausfuehrung wird von links 
+        nach rechts jeder Konvertierungsvorschrift ein Argument der 
+        argumentliste  zugeordnet. Die eingegebenen Zeichen werden 
+        entsprechend der Konvertierungsvorschrift bis zum naechsten
+        Trennzeichen (Leerzeichen, Tabulator, Newline) bzw. bis zum 
+        naechsten, nicht zur Zahlendarstellung passenden Zeichen 
+        konvertiert und in die zugehoerige Eingabevariable gespeichert.
+        Fuehrende Trennzeichen werden uebergangen (ausser bei der 
+        Konvertierungsvorschrift c ). Danach wird in gleicher Weise 
+        mit der naechsten Konvertierungsvorschrift fortgesetzt. Eine 
+        Konvertierungsvorschrift hat (vereinfacht) die Form
+
+        %[feldbreite]konvertierungssymbol
+
+        feldbreite gibt die Anzahl der maximal auszuwertenden Zeichen 
+        an (falls nicht vorher ein Trennzeichen oder nicht passendes 
+        Zeichen erreicht wurde).
+        konvertierungssymbol gibt die Art der Konvertierung an und muss
+        zum Datentyp der zugehoerigen Eingabevariablen passen.
+          d   es wird eine ganze Dezimalzahl erwartet
+          o   es wird eine ganze Zahl in Oktaldarstellung erwartet
+          x   es wird eine ganze Zahl in Hexadezimaldarstellung erwartet
+          f   es wird eine reelle Dezimalzahl erwartet
+          lf  das gleiche fuer ein double-Argument
+          c   aus der Eingabefolge wird ein beliebiges einzelnes Zeichen
+              uebernommen; mit %1s koennen fuehrende Trennzeichen ueber-
+              gangen werden
+          s   aus der Eingabefolge werden alle Zeichen bis zum naechsten 
+              Trennzeichen uebernommen und '\0' angefuegt. Es wird nicht
+              geprueft ob die Eingabevariable gross genug ist !
+        Als Funktionswert liefert  scanf die Anzahl der erfolgreich aus-
+        gefuehrten Konvertierungen. 
+        Ctrl D (nichts eingegeben !) liefert als Funktionswert  EOF . 
+        Beispiel:	
+          int x;
+          char c, kette[100];
+            . . . 
+          scanf ("%d %c %s", &x, &c, kette);
+
+Ausgabe:   printf ("format", argumentliste);
+        Die in  format anzugebende Zeichenfolge enthaelt die Konver-
+        tierungsvorschriften fuer die in der  argumentliste aufge-
+        fuehrten Ausgabedaten und auszugebenden Text. Jede Konver-
+        tierungsvorschrift wird durch das Zeichen  % eingeleitet. 
+        Bei der Ausfuehrung wird die Formatliste von links nach rechts
+        abgearbeitet, wobei die Textzeichen unveraendert ausgegeben 
+        werden und jeder Konvertierungsvorschrift i. R. ein Argument 
+        der  argumentliste zugeordnet und dessen Ausgabe entsprechend 
+        gesteuert wird. Eine Konvertierungsvorschrift hat (vereinfacht)
+        die Form
+
+        %[-][feldbreite][.genauigkeit]konvertierungssymbol
+
+        feldbreite gibt die Anzahl der mindestens auszugebenden Zeichen
+        an (evtl. wird mit Leerzeichen aufgefuellt). Die Ausgabe erfolgt
+        rechtsbuendig, bei Angabe von  -  linksbuendig.
+        genauigkeit gibt die Anzahl der Ziffern nach dem Dezimalpunkt an.
+        konvertierungssymbol gibt die Art der Konvertierung an und muss 
+        zum Datentyp des zugehoerigen Arguments passen.
+          d   fuer ein ganzzahliges Argument
+          o   ganze Zahl in oktaler Darstellung
+          x oder X   ganze Zahl in hexadezimaler Darstellung
+          f   fuer ein float-Argument
+          lf  fuer ein double-Argument
+          c   fuer ein einzelnes Zeichen
+          s   fuer eine mit '\0' abgeschlossene Zeichenfolge
+          %   zur Ausgabe des Zeichens %
+        Beispiel:	
+          int x;
+          char c, kette[100];
+            . . . 
+          printf ("Ergebnis:%d %c %s\n", x, c, kette);
+
+Weitere Einzelheiten sind den entsprechenden Manuals zu entnehmen.
+

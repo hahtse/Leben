@@ -1,0 +1,81 @@
+Shared Memory (IPC - Paket)  
+
+gemeinsam nutzbarer Speicher zur Kommunikation von Prozessen
+
+1. benoetigtes .h-File:
+   #include <sys/shm.h>
+
+2. Anlegen eines shared Memory-Segments
+
+   int shmid;      SHM-ID-Variable
+   int shmflag;    Flags und Zugriffsrechte
+   key_t shmkey;   eindeutige SHM-Kennung
+   size_t shmsize; Segmentgroesse
+   shmkey = 17;    willkuerlicher Wert >0 oder 
+                   ftok() verwenden s. u.
+   shmflag = IPC_CREAT | 0644;
+             IPC_CREAT - neues Segment anlegen, falls fuer
+                   diesen shmkey noch nicht vorhanden
+             0644  Zugriffsrechte analog zu Files
+                   (user group other)
+   shmsize = 100;  Byteanzahl
+
+   SHM anlegen bzw. ID eines mit diesem shmkey bereits 
+   angelegten Shared Memory zurueckgeben:
+   shmid = shmget (shmkey, shmsize, shmflag);
+           shmid >= 0 systemweit eindeutiger ID
+                  < 0 Fehler
+
+3. Zugriff auf SHM-Segment vorbereiten, ausfuehren und beenden
+
+   char *shmadr;   Adresse des SHM-Segments
+   void *adr;
+   int rc, flag;
+
+   Segmentzugriff vorbereiten:
+   flag = 0;       Lese- und Schreib- Zugriff oder (u. a.)
+   flag = SHM_RDONLY;  nur Lese-Zugriff
+   adr = NULL;     Segmentadresse durch System ermitteln oder
+   adr = Adresse   vorher benutztes Segment wieder verwenden
+   Zugriff vorbereiten:
+   shmadr = shmat (shmid, adr, flag); 
+         shmadr == (char *)(-1)  Fehler - Fehlercode auswerten
+                sonst  kein Fehler - Segmentadresse
+
+   Segment-Zugriff:
+   *shmadr = '\0';  indirekter Zugriff oder
+   char z[100];     Speicher mit Zeichenkette
+   strcpy (shmadr, z); Zeichenkette in SHM uebertragen
+   Die Reihenfolge des Zugriffs auf gemeinsam verwendeten 
+   Speicherplatz durch mehrere Prozesse muss durch die 
+   Anwendung synchronisiert werden.
+
+   Segmentzugriff beenden:
+   int rc;
+   rc = shmdt (shmadr);
+        rc == 0  Operation ohne Fehler
+            < 0  Fehler - Fehlercode auswerten
+
+4. Steueroperation
+
+   Shared Memory aus System entfernen (bleibt sonst bestehen):
+   int rc;
+   rc = shmctl (shmid, IPC_RMID, 0);
+        rc == 0  Operation ohne Fehler
+            < 0  Fehler - Fehlercode auswerten
+
+   Statusinformation:
+   struct shmid_ds buf;  vordefinierte Struktur
+   rc = shmctl (shmid, IPC_STAT, &buf);
+        buf enthaelt bei rc == 0 u. a.:
+        buf.shm_segsz   Segmentgroesse
+
+5. IPC-key-Erzeugung
+
+   key_t key;
+   char fname[100];  Filename, auf das Zugriffsrecht besteht
+   int id;           Wert im Bereich 1,...,255 modifiziert 
+                     key-Erzeugung
+   key = ftok (fname, id);
+         key > 0     systemweit (nahezu) eindeutiger key
+             < 0     Fehler - Fehlercode auswerten

@@ -1,0 +1,159 @@
+
+C - Shell - Kommando - Prozeduren 
+
+csh - Prozeduren muessen in der ersten Zeile beginnen mit
+#! /bin/csh
+
+
+Prozedur beenden:
+  exit (num. Ausdruck)
+gibt den Wert des num. Ausdrucks an die aufrufende Shell zurueck.
+
+
+Bedingte Ausfuehrung von Kommandos
+a) einzeiliges Format
+	if (Ausdruck) Kommando	
+b) mehrzeiliges Format
+	if (Ausdruck) then		
+	  Kommandozeilen			
+	else
+	  Kommandozeilen
+	endif
+c) Kaskadierung
+	if (Ausdruck) then		
+	  Kommandozeilen	
+	else 		    oder  else if (Ausdruck) then
+          if (Ausdruck) then             Komanndozeilen
+	    Kommandozeilen             else
+	  else	                         Kommandozeilen
+	    Kommandozeilen        endif
+	  endif
+	endif
+
+Ausdruecke werden in einer mit C vergleichbaren Notation 
+dargestellt.
+Vergleichsoperatoren:  
+  ==    !=      fuer beliebige Operanden
+  <  <=  >  >=  nur fuer numerische Operanden
+Verknuepfung von Ausdruecken:  
+  &&   log. Und
+  ||   log. Oder
+  !    log. Negation
+ 
+Test von Files:
+  -e filename  true, wenn das File existiert
+  -f filename  true, wenn das File existiert und ein regulaeres 
+                     File ist
+  -d filename  true, wenn das File existiert und ein Directory ist
+  -z filename  true, wenn das File existiert und leer ist
+
+
+
+
+
+
+Fallunterscheidung 
+  switch (Variable)
+    case Muster1:	
+                  Kommandos
+                  breaksw     (oder Ende mit  exit(Wert))
+    case Muster2:	
+                  Kommandos
+                  breaksw     (oder Ende mit  exit(Wert))
+         ...
+    default:      
+                  Kommandos   (optionaler else-Zweig)	
+  endsw
+Der Wert von  Variable  wird berechnet und mit den als  Muster  
+angegebenen Zeichen verglichen. Bei Gleichheit werden die 
+zugehoerigen Kommandos abgearbeitet und der Fall mit  breaksw 
+verlassen. Falls  breaksw  oder  exit  fehlt, werden die 
+nachfolgenden Kommandos abgearbeitet! Zur Behandlung von 
+Sonderzeichen in   Muster  siehe Beispiel-Prozedur 
+  csh-switch.
+
+
+Zyklen
+a)  while (Ausdruck)    (solange Ausdruck true bzw. != 0)
+      Kommandos
+    end
+b)  repeat n Kommando    muss in 1 Zeile stehen; nur 1 Kommando 
+    Das  Kommando   wird  n  mal ausgefuehrt.
+c)  foreach Variable (Werteliste)
+      Kommandos
+    end
+    Die  Variable nimmt alle Werte der  Werteliste  an und fuehrt 
+    damit die Kommandos  aus.
+Zyklen koennen mit  break verlassen werden.
+continue uebergeht die restlichen Kommandos des Zyklus und beginnt
+den naechsten Durchlauf.
+
+
+Sprunganweisung
+    goto marke	 fuer die  marke  sind auch Variablen oder 
+                 Kommando-Substitution moeglich
+    marke:       definiert ein Sprungziel
+
+
+Kommentare: Zeichenfolge nach    # 
+
+
+
+
+
+
+
+
+
+Variablen
+Es wird unterschieden zwischen Shellvariablen und Umgebungs-
+variablen.
+Shellvariablen sind nur in der aktuellen Shell definiert. Sie sind
+nicht mehr definiert, wenn eine neue Shell aufgerufen wird (Aufruf
+einer csh-Prozedur - ausser mit source kommando) oder die aktuelle
+Shell beendet wird.
+Umgebungsvariablen bleiben nach Ende einer Kommando-Prozedur 
+definiert.
+
+Variable anlegen und Wert zuweisen:	
+  set variable=wert   Shell-Variable, nur in aktueller csh gueltig
+  setenv variable wert   Umgebungsvariable
+      wert wird als Zeichenkette verarbeitet; 
+      auch Kommandosubstitution moeglich
+  set arrayvariable=(wert1 wert2 ... wertn)  eindimensionales Feld
+      anlegen und Werte zuweisen
+  set variable=$<      Eingabe des Variablenwertes
+  setenv variable $<
+numerische Variablen:
+  @ variable=ausdruck   Notation des num. Ausdrucks analog C
+
+Anzeige:            set bzw. setenv
+Variable loeschen:  unset variable bzw. unsetenv variable
+Bezug auf Variablen:	
+  $variable  bzw.
+  $arrayvariable[index]
+    Die Verwendung nicht definierter Variablen fuehrt zu 
+    Fehleranzeige und Abbruch der Prozedur.
+  $?variable  1  falls variable definiert ist
+              0  falls variable nicht definiert ist
+
+Kommandozeilenargumente  $0, ..., $9, ${10}, ... 
+  $0      Name der aufgerufenen Kommandoprozedur
+  $1, ... oder   Werte der Argumente beim
+  $argv[1], ...  Prozeduraufruf                     
+  $#argv  Anzahl der Kommandozeilenargumente (ausser $0)
+  
+Variablen mit spezieller Bedeutung:
+  $$        PID der aktuellen Shell	
+  $* oder   Folge aller Kommandozeilenargumente als eine
+  $argv[*]  Zeichenkette             
+  $HOME     Home-Directory (Umgebungsvariable)
+  $home     Home-Directory (Shellvariable)
+  $PATH     Pfad fuer die Suche nach Kommandofiles
+            (Umgebungsvariable) 
+  $path     bzw. (Shellvariable)
+  $prompt   Promptzeichen (Standard %)
+  $status   Exitwert des letzten Kommandos
+  $history  Laenge des History-Kellers
+  $cwd	    aktuelles Directory
+  $ignoreeof  csh wird mit Ctrl-D nicht beendet

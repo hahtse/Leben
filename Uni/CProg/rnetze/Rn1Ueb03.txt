@@ -1,0 +1,7 @@
+3. Uebung
+
+Wie viel Signalzustaende sind erforderlich, um bei einer analogen 
+Uebertragung auf einem System mit einer Bandbreite von 8 kHz 
+(unter Annahme des Nyquist-Kriteriums) eine Datenrate von 
+64 KBit/s zu erreichen?
+

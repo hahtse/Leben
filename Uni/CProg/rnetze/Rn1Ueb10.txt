@@ -1,0 +1,10 @@
+10. Uebung
+
+Wie lange ist das Uebertragungsmedium durch ein Ethernet-Frame 
+mit minimaler Framelaenge belegt, wenn Sende- und Empfangs- 
+Station ueber zwei 10BaseT-Segmente mit der maximal moeglichen 
+Segmentlaenge verbunden sind ?  Die Signalgeschwindigkeit betraegt 
+etwa 2/3 der Lichtgeschwindigkeit und die Durchlaufzeit durch den 
+Repeater bzw. Switch betrage 1 Mikrosekunde.
+
+

@@ -1,0 +1,33 @@
+3. Uebung zum Fach  Betriebssysteme II
+
+Es ist ein Client-Server-Paar fuer Unix Domain STREAM-Sockets zu 
+erstellen, mit dem am Client eingegebene Daten vom Server in 
+Files gespeichert werden.
+Beim Aufruf des Clients soll der Filename als Kommandozeilen-
+Argument angegeben werden koennen. Wenn die Angabe fehlt, ist 
+sie ueber stdin einzugeben. Der Filename ist als erste Nach-
+richt an den Server zu senden. Falls das anzulegende File 
+bereits existiert, soll das Ueberschreiben des Zielfiles zuvor 
+vom Client bestaetigt werden.
+Am Client ueber stdin eingegebene Daten werden zeilenweise zum 
+Server uebertragen, der sie abspeichert und als Quittung die 
+Anzahl der empfangenen Bytes zum Client sendet. Mit Eingabe 
+von Ctrl-D soll der Eingabezyklus, die Verbindung zum Server 
+und die Arbeit des Clients beendet werden.
+
+Der Server ist als paralleler Server anzulegen, der nach dem 
+Eintreffen einer Anforderung einen neuen Prozess einrichtet, 
+um die Anforderung zu bedienen.
+Die Beendigung der Servers soll ueber ein Signal (z. B. SIGINT) 
+eingeleitet werden. Durch den Parent-Prozess des Servers, soll 
+nun keine neue Verbindung mehr zugelassen werden. Die Bedienung 
+der bestehenden Verbindungen durch die Child-Prozesse des Servers 
+soll aber noch bis zur Beendigung durch den Client fortgesetzt 
+werden. Erst wenn alle Clients ihre Verbindung geschlossen haben 
+und damit die zugehoerigen Child-Prozesse geendet haben, soll 
+sich der Parent-Prozess beenden.
+Aufrufe von Systemfunktionen sind auf fehlerfreie Ausfuehrung 
+zu ueberpruefen (bei Fehler Nachricht mit perror ausgeben).
+
+Abgabetermin: 15.04.2011
+

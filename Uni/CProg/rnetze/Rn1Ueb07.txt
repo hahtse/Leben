@@ -1,0 +1,8 @@
+7. Uebung
+
+Die Zeichenfolge "Datenrate" (in 7Bit-ASCII-Darstellung) ist zu 
+uebertragen. Bildung der Paritaetsbits bei gerader Paritaet und des 
+LRC-Zeichens. Angabe einer Fehlerkombination, die durch das 
+Kreuzparitaetsverfahren nicht erkannt wird.
+
+

@@ -1,0 +1,48 @@
+Release 13.1 - xst O.40d (lin)
+Copyright (c) 1995-2011 Xilinx, Inc.  All rights reserved.
+--> 
+Parameter TMPDIR set to /home/hc/HET/xst/projnav.tmp
+
+
+Total REAL time to Xst completion: 0.00 secs
+Total CPU time to Xst completion: 0.17 secs
+ 
+--> 
+Parameter xsthdpdir set to /home/hc/HET/xst
+
+
+Total REAL time to Xst completion: 0.00 secs
+Total CPU time to Xst completion: 0.17 secs
+ 
+--> 
+WARNING:Xst:3164 - Option "-debug" found multiple times in the command line. Only the first occurence is considered.
+
+=========================================================================
+*                          HDL Compilation                              *
+=========================================================================
+Compiling vhdl file "/home/hc/HET/COY_GPU.vhd" in Library work.
+Entity <COY_GPU> compiled.
+Entity <COY_GPU> (Architecture <Behavioral>) compiled.
+Compiling vhdl file "/home/hc/HET/CoyALU.vhd" in Library work.
+Entity <CoyALU> compiled.
+Entity <CoyALU> (Architecture <Behavioral>) compiled.
+Compiling vhdl file "/home/hc/HET/tb_COY_ALU.vhd" in Library work.
+Entity <tb_COY_ALU_vhd> compiled.
+ERROR:HDLParsers:1015 - "/home/hc/HET/tb_COY_ALU.vhd" Line 84. Wait for statement unsupported.
+ERROR:HDLParsers:1015 - "/home/hc/HET/tb_COY_ALU.vhd" Line 89. Wait for statement unsupported.
+ERROR:HDLParsers:808 - "/home/hc/HET/tb_COY_ALU.vhd" Line 92. = can not have such operands in this context.
+ERROR:HDLParsers:808 - "/home/hc/HET/tb_COY_ALU.vhd" Line 97. = can not have such operands in this context.
+
+
+Total REAL time to Xst completion: 0.00 secs
+Total CPU time to Xst completion: 0.28 secs
+ 
+--> 
+
+
+Total memory usage is 133648 kilobytes
+
+Number of errors   :    4 (   0 filtered)
+Number of warnings :    1 (   0 filtered)
+Number of infos    :    0 (   0 filtered)
+

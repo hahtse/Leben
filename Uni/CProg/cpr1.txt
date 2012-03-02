@@ -1,0 +1,37 @@
+1. Uebung zum Fach C-Programmierung
+
+
+Es ist ein C - Programm zu erstellen, das die Anzahl der 
+Zeichen, Worte und Zeilen sowie der alphanumerischen und der 
+nicht alphanumerischen Zeichen ermittelt, die in einer ueber  
+stdin  eingegebenen Folge von Textzeilen enthalten sind. Die 
+Eingabe ueber Tastatur ist mit Ctrl-D (erzeugt EOF-Bedingung) 
+zu beenden. 
+Als Wort ist jede durch (ein oder mehrere) Leerzeichen, Tabu-
+lator oder Newline abgeschlossene Zeichenfolge zu betrachten.
+Bestimmen Sie mit Hilfe Ihres Programmes ueber Fileumlenkung 
+die Anzahl der Zeichen, Worte und Zeilen Ihres C-Quelltextfiles 
+und vergleichen Sie diese Werte mit denen, die das Kommando  
+wc  liefert.
+Weiterhin ist fuer jede eingegebene Zeile 
+- die Zeichenanzahl in der betreffenden Zeile und
+- die Position der ersten in dieser Zeile gefundenen Zahl (bzw. 
+  eine entsprechende Textausgabe, falls keine Zahl enthalten ist)
+zu ermitteln. 
+
+Hinweise:
+- Die Umlenkung eines Files nach stdin kann beim Aufruf eines 
+  Kommandos auf der Kommandozeile durch 
+     Kommando  < Filename   
+  erreicht werden.
+- Wenn das File am PC erstellt wurde, ist die unterschiedliche 
+  Art der Newline-Darstellung zu beachten.
+  Unix-Format:   Zeilenende = '\n' = 0x0a
+  MS-DOS-Format: Zeilenende = '\r' '\n' = 0x0d 0x0a 
+  Eine Umwandlung ist moeglich mit dem Kommando
+     dos2unix dosfile unixfile
+
+
+
+Abgabetermin: 09.04.2010
+

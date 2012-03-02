@@ -1,0 +1,8 @@
+9. Uebung
+
+Welche maximale Bitfehlerwahrscheinlichkeit ist zulaessig, damit 
+der durch Wiederholung der Uebertragung von fehlerhaften Frames 
+entstehende zusaetzliche Aufwand kleiner als 0,1% bleibt. Es wird ein 
+feste Framelaenge von 1024 Bit angenommen.
+
+

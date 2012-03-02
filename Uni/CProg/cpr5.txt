@@ -1,0 +1,36 @@
+5. Uebung zum Fach C-Programmierung
+
+Es ist ein C-Programme zur Verarbeitung eines Files mit Daten-
+saetzen folgender Struktur zu entwickeln (es sind Datensaetze 
+fester Laenge mit der angegebenen Struktur zu verwenden!): 
+
+	struct satztyp {
+	  char name[30];
+          char vorname[20];
+	  char adresse[50];
+ 	};
+
+Der Name des zu bearbeitenden Files soll als Kommandozeilen-
+argument angegeben werden koennen. Falls der Filename in der 
+Kommandozeile nicht angegeben wird, ist der Filename ueber 
+stdin einzugeben. Wenn das angegebene File nicht existiert, 
+soll nach Anfrage ueber stdin wahlweise ein anderer Filename 
+eingegeben oder ein neues File angelegt werden koennen.
+
+Fuer das Datenfile sind folgende Operationen als Funktionen
+zu implementieren:
+
+	Eingabe von neuen Datensaetzen,
+	sequentielle Ausgabe aller Datensaetze,
+
+Die Auswahl der jeweils auszufuehrenden Operation soll ueber
+ein Menue erfolgen.
+
+Die Eingabefunktion speichert einen einzugebenden Datensatz 
+jeweils am Fileende (ohne Sortierung) ab.
+
+Bei der Ausgabe ist zu jedem Datensatz die zugehoerige Daten-
+satznummer mit auszugeben.
+
+Abgabetermin: 04.06.2010
+

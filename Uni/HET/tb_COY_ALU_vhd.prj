@@ -1,0 +1,3 @@
+vhdl work "COY_GPU.vhd"
+vhdl work "CoyALU.vhd"
+vhdl work "tb_COY_ALU.vhd"

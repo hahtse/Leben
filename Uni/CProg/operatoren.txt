@@ -1,0 +1,56 @@
+Liste der Operatoren
++	Addition
+-	Subtraktion 
+-	negatives Vorzeichen
+*	Multiplikation
+/	Division
+%	Rest der ganzzahligen Division
+=	Zuweisung
+++	Inkrementierung
+--	Dekrementierung
+op=	zusammengesetzter Zuweisungsoperator (+,-,...)
+&	Adressoperator
+*	Indirektoperator (Inhalt des Adressbezuges)
+&	UND-Verknuepfung bitweise
+|	inklusive ODER-Verknuepfung bitweise
+^	exklusive ODER-Verknuepfung bitweise
+~	Einerkomplement bitweise
+<<	Verschiebung nach links 
+>>	Verschiebung nach rechts
+< <=	Vergleichsoperatoren kleiner, kleiner gleich
+> >=	Vergleichsoperatoren groesser, groesser gleich
+== !=	Vergleichsoperatoren gleich, ungleich
+&&	logisches UND
+||	logisches ODER
+!	logische Negation
+?:	Entscheidungsoperator
+,	Kommaoperator (Folge von Ausdruecken)
+()	Funktionsdefinition
+(typ)	explizite Typkonvertierung
+[]	Feldindizierung
+->	Zeiger auf Strukturkomponente
+.	Zugriff auf Strukturkomponente
+sizeof	Speicherplatzbedarf (Datentyp oder Variable)
+
+Vorrangfolge der Operatoren
+() [] -> .			l
+! ~ ++ -- - (typ) * & sizeof	r	(unaere Operatoren)
+* / %				l
++ -				l
+<< >>				l
+< <= > >=			l
+== !=				l
+&				l
+^				l
+|				l
+&&				l
+||				l
+?:				r
+= op=				r
+,				l
+
+Folgen von Operatoren (bzw. Ausdruecken mit Operatoren) mit gleichem 
+Vorrang werden von links (l) oder von rechts (r) abgearbeitet 
+(z. B. a=b=0;  wird von rechts abgearbeitet, d. h. zuerst wird  
+b=0  zugewiesen, danach wird  a  der Wert des Ausdruckes  b=0  
+zugewiesen).

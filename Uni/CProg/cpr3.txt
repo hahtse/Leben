@@ -1,0 +1,43 @@
+3. Uebung zum Fach C-Programmierung
+
+
+Analog zur 2. Uebung sind wiederum Zeichenketten zeilenweise ueber  
+stdin  einzulesen, die in dynamisch angeforderte Speicherbereiche zu 
+uebertragen sind.
+Weiterhin sind folgende Operationen auszufuehren:
+- Einordnen jeder eingegebenen Zeichenkette an das aktuelle Ende 
+  einer verketteten Liste in der Reihenfolge ihrer Eingabe (also 
+  unsortiert). Verwenden Sie dazu eine Struktur mit folgendem 
+  Aufbau:
+
+  struct element {
+    struct element *next;  /* Zeiger auf das naechste Listenlement */
+    char *zeichenkette;    /* Zeiger auf die Zeichenkette */
+  } ;
+
+Die Listenelemente mit dieser Struktur sind ebenfalls durch 
+dynamische Speicheranforderung bereitzustellen.
+Das letzte Element der Liste wird durch den next-Zeiger NULL 
+gekennzeichnet.
+
+Nach Abschluss der Eingabe:
+
+- Sequentielle Ausgabe aller in der Liste gespeicherten 
+  Zeichenketten. 
+
+- Die Zeichenketten der Liste sind sequentiell nach einer 
+  Zeichenfolge (auch als Teilfolge) zu durchmustern, die als
+  Kommandozeilenargument uebergeben wird. Die Zeichenfolge kann 
+  evtl. in mehreren Listenelementen enthalten sein. Es ist die 
+  gefundene Zeichenkette und die Nummer des betreffenden Elements 
+  innerhalb der Liste auszugeben.
+
+- Vor dem Beenden des Programms sind alle angeforderten dynamischen 
+  Speicherbereiche wieder freizugeben.
+
+Verwenden Sie als Testdaten die im File /home/reimann/pub/inb09.txt
+oder /home/reimann/pub/mib09.txt gespeicherte Namensliste mittels 
+Fileumlenkung zur Eingabe ueber stdin.
+
+
+Abgabetermin: 07.05.2010

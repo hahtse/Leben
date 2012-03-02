@@ -1,0 +1,42 @@
+9. Uebung zum Fach Betriebssysteme I
+
+Die Programme zur 7. Uebung, in denen ein File durch 2 Child-
+Prozesse erstellt und ausgegeben wird, sind so zu modifizieren, 
+dass ihr Ablauf ueber Signale synchronisiert wird.
+- Im Parent-Prozess ist der Filename als Kommandozeilenargument 
+  zu uebernehmen oder, falls nicht angegeben, ueber stdin einzu-
+  geben. Wenn das File nicht existiert, ist das File anzulegen. 
+  Wenn das File bereits existiert, ist nach einer entsprechenden
+  Anfrage das File neu anzulegen oder zum Erweitern zu oeffnen. 
+  Danach sind zwei Child-Prozesse zu erzeugen, wobei der 1. Child-
+  Prozess die Ausgabe und der 2. Child-Prozess das Anlegen oder 
+  Erweitern des Files ausfuehrt. Der von den Child-Prozessen abzu-
+  arbeitende Programmcode ist jeweils mit execv() zu starten. Nach
+  der Erzeugung des 1. Child-Prozesses wartet der Parent-Prozess 
+  bis das im 1. Child-Prozess gestartete Programm ein Bereit-
+  schafts-Signal sendet, bevor der 2. Child-Prozess eingerichtet 
+  wird. 
+- Im 1. Child-Prozess soll ein Programm gestartet werden, das ein 
+  File ausgibt, das vom 2. Child-Prozess erstellt bzw. erweitert 
+  wurde. Der Name des Files soll als Argument bei execv() ueber-
+  geben werden. Da die Fileausgabe erst nach der Erstellung des 
+  Files erfolgen kann, ist auf ein Signal vom 2. Child-Prozess zu 
+  warten, das die Fertigstellung des Files anzeigt. Dafuer ist 
+  eine Signal-Behandlungsfunktion anzumelden. Damit der 2. Child-
+  Prozess das Signal nicht eher sendet als der 1. Child-Prozess 
+  die Signal-Behandlungsfunktion angemeldet hat, ist nach der 
+  Anmeldung ein Signal an den Parent-Prozess zu senden, nach 
+  dessen Eintreffen der 2. Child-Prozess erst erzeugt wird. 
+- Im 2. Child-Prozess soll ein Programm gestartet werden, das das 
+  File erstellt oder fortsetzt. Filename und PID des 1. Child-
+  Prozesses sind als Argumente bei execv() zu uebergeben. In das 
+  File sollen ueber stdin einzugebende Zeilen gespeichert werden 
+  (Abschluss der Eingabe bei Ctrl D). Nach dem Ende der File-
+  erstellung ist das File zu schließen und ein Signal an den 
+  1. Child-Prozess zu senden, der dann mit der Ausgabe des Files 
+  beginnt.
+- Der Parent-Prozess soll auf die Beendigung beider Child-Prozesse
+  warten und deren Ende-Statuswerte ausgeben.
+Zur Bearbeitung der Programme ist make zu verwenden.
+
+Abgabetermin: 10.12.2010

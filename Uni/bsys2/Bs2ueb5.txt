@@ -1,0 +1,14 @@
+5. Uebung zum Fach  Betriebssysteme II
+
+Es ist ein Client-Server-Paar fuer Unix Domain Sockets zu 
+erstellen, bei dem der Server ein vom Client angefordertes File 
+oeffnet und den Filedeskriptor an den Client uebergibt.
+Der Client sendet in der Anforderung den Namen des zu ueber-
+gebenden Files. Der Server prueft zunaechst die Existenz des 
+Files. Wenn das File nicht existiert, ist eine entsprechende 
+Quittung an den Client zu senden. Existiert das File, wird es 
+geoeffnet und der Filedeskriptor gemeinsam mit einer positiven 
+Quittung an den Client gesendet. Durch den Client wird das 
+File auf stdout ausgegeben. 
+
+Abgabetermin: 20.05.2011

@@ -1,0 +1,52 @@
+1. Child-Prozess erzeugen
+
+#include <sys/types.h>
+#include <unistd.h
+pid_t pid;
+
+pid = fork();
+
+Es wird eine Kopie des aufrufenden Prozesses (Parent-Prozess) 
+erzeugt (Kopie des Programmcodes und der Daten). Der Child-
+Prozess "erbt" die Eigenschaften des Parent-Prozesses (u. a. 
+die Variablen und geoeffnete Files). Funktionswert pid:
+-1  fork() mit Fehler beendet
+ 0  aktueller Prozess ist Child-Prozess
+>0  aktueller Prozess ist Parent-Prozess
+
+
+2. aktuellen Prozess beenden
+
+#include <stdlib.h>
+int status = 0;
+
+exit (status);    auch    exit (0);
+
+Der aktuelle Prozess wird beendet und die von ihm belegten 
+Ressourcen freigegeben (u. a. werden geoeffnete Files 
+geschlossen). Konventionen fuer den Wert von status:
+  0  zur Anzeige eines fehlerfreien Endes
+!=0  zur Anzeige einer Bendigung im Fehlerfall
+Der status-Wert wird an den Parent-Prozess uebergeben 
+(z. B. die aufrufende Shell).
+
+
+3. Abfrage des Ende-Status eines Child-Prozesses
+
+#include <sys/types.h>
+#include <sys/wait.h>
+int status;
+pid_t pid;
+
+pid = wait (&status);
+
+Falls kein Child-Prozess (mehr) existiert, wird der aufrufende 
+Prozess nicht blockiert. Funktionswert pid == -1 (Fehlerfall).
+Falls noch ein Child-Prozess existiert, wird auf das Ende 
+eines dieser Prozesse gewartet. Wenn ein Child-Prozess endet:
+Funktionswert pid == PID des beendeten Child-Prozesses.
+Inhalt von status:
+Child-Ende durch Signal      status & 0x7F > 0 (Signalnr.) und 
+                            (status>>8) & 0xFF == 0
+Child-Ende durch exit(wert)  status & 0x7F == 0 und
+                            (status>>8) & 0xFF == exit-wert.

@@ -1,0 +1,8 @@
+2. Uebung
+
+Berechnung von Oeffnungswinkel und numerischer Apertur eines 
+Lichtwellenleiters mit 
+	n(Kern) = 1,457   und  n(Mantel) = 1,417.
+Welcher Grenzwinkel der Totalreflexion fuer den Uebergang vom
+Kern zum Mantel ergibt sich?
+

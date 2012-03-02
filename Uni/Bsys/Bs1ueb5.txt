@@ -1,0 +1,30 @@
+5. Uebung zum Fach Betriebssysteme I
+
+Erstellen Sie ein C-Programm mit folgendem Ablauf:
+- Durch den mit dem Programmstart eingerichteten Prozess ist 
+  ein neuer Prozess (Child-Prozess) zu starten. 
+- Nach dem Einrichten des Child-Prozesses arbeiten beide 
+  Prozesse mit dem gleichen Programmcode aber in verschiedenen 
+  Programmzweigen weiter.
+- Beide Prozesse geben ihre Prozessnummer (Funktion getpid())
+  und der Child-Prozess ausserdem die Prozessnummer des Parent-
+  Prozesses (Funktion getppid()) aus. 
+- Zur Veranschaulichung der parallelen Abarbeitung der beiden 
+  Prozesse sollen im Parent-Prozessen die Primzahlen bis zu 
+  4.000.000 und im Child-Prozess bis zu 5.000.000 berechnet und 
+  von diesen Primzahlen jede 2000. auf stdout ausgegeben werden. 
+  Zur Zuordnung der Ausgaben ist die jeweilige Prozessnummer mit 
+  auszugeben. Am Ende der Berechnungen ist die Anzahl der 
+  gefundenen Primzahlen auszugeben.
+- Der Parent-Prozess soll nach dem Ende der Berechnungen auf 
+  die Beendigung des Child-Prozesses warten und danach dessen 
+  Ende-Status ausgeben. Der Child-Prozess ist nach dem Ende der 
+  Berechnungen zu beenden oder wahlweise vorzeitig durch eine 
+  Bedieneraktion (kill-Kommando) abzubrechen.
+
+Hinweis: Zur Berechnung der Primzahlen siehe auch 
+  /home/reimann/pub/bsys/prim0.c
+
+
+Abgabetermin: 12.11.2010
+

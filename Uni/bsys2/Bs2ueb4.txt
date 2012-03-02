@@ -1,0 +1,21 @@
+4. Uebung zum Fach  Betriebssysteme II
+
+Die zur 2. Uebung erstellten Programme sind so zu modifizieren, 
+dass diese ein Client-Server-Paar fuer Unix Domain DGRAM-Sockets 
+bilden.
+Das Client-Programm soll ueber stdin eingegebe Zeilen an den 
+Server senden. Ctrl-D beendet den Eingabe-Datenstrom und das 
+Client-Programm. Beginn und Ende eines Datenstroms ist durch 
+geeignete Steuerinformationen zu kennzeichnen. Das Client-Programm 
+soll mehrfach parallel gestartet werden koennen.
+Das Server-Programm soll die empfangenen Datenstroeme der Clients 
+unterscheiden koennen und in separaten Files zwischenspeichern. Am 
+Ende eines Datenstroms ist das betreffende File auf stdout 
+auszugeben. 
+Mit Ctrl-C ist das Beenden des Server-Programms einzuleiten. Danach
+soll ein neu gestarteter Client ueber eine Quittung abgewiesen 
+werden. Das Server-Programm soll aber erst beendet werden, wenn alle 
+Datenstroeme durch den zugehoerigen Client beendet worden sind.
+
+Abgabetermin: 06.05.2011
+

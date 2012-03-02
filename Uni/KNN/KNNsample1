@@ -1,0 +1,22 @@
+arg= [0 1 2 3 4 5]/10;
+erg = [0 1 4 9 16 25]/100; 
+net = newff([0 5],[3 3 1],{'logsig','logsig','purelin'},'traingd');
+
+% Parameter-Standard-Einstellungen (ggf. zu ändern) 
+   net.trainParam.lr   = 0.01; % Lernrate 0.01
+   net.trainParam.show = 25;   % Anzeige nach 25 Iterationen
+ 
+   % Abbruchbedingungen
+   net.trainParam.goal     = 0.0;    % Grenze für Netzfehler: 0
+   net.trainParam.epochs   = 500;    % Trainigsepochen: 100
+   net.trainParam.time     = inf;    % Trainigszeit in s: Inf
+   net.trainParam.min_grad = 1.e-10; % Mindest-Grad.-Länge 1.e-10
+   net.trainParam.max_fail = 5;      % Overfitting-Vermeidung
+% Ende der Parameter-Einstellungen
+
+net = train(net,arg,erg);
+y=sim(net,arg);
+y
+x = linspace(0,1,201);
+y=sim(net,x);
+plot(x,y,'r+')

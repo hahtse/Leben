@@ -1,0 +1,27 @@
+2. Uebung zum Fach Betriebssysteme I
+
+
+
+Erstellen Sie fuer die C-Shell eine Kommandoprozedur, die mit 
+
+	fakul [ zahl ]
+
+aufgerufen wird und die Fakultaet der als Argument angegebenen 
+Zahl berechnet. 
+
+Falls kein Argument angegeben wurden, ist die Zahl waehrend 
+der Abarbeitung der Prozedur einzugeben. 
+
+Vor der Fakultaetsberechnung ist zu pruefen, ob das angegebene 
+Argument bzw. der eingegebene Wert eine gueltige Zahl ist.
+	
+Bei der Fakultaetsberechnung ist vor jeder Multiplikation zu 
+pruefen, ob dabei der Zahlenbereich ueberschritten wird.
+
+Hinweis: Zum Test von Variablen auf Nicht-Ziffern siehe
+         /home/reimann/pub/bsys/zifftest
+
+
+
+Abgabetermin: 22.10.2010
+

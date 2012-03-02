@@ -1,0 +1,120 @@
+Pipes
+
+Datenkanaele zur Kommunikation von Prozessen nach dem FIFO-
+Prinzip
+
+1. unbenannte Pipes
+
+   Pipe wird von einem Prozess erzeugt und durch fork() an den
+   Child-Prozess vererbt
+   Anlegen einer Pipe:
+   #include <unistd.h>
+   int fd[2], rc, pid;
+   rc = pipe (fd);  erzeugt 2 geoeffnete Deskriptoren in fd[0] 
+                    und fd[1] fuer den Zugriff auf die Pipe
+        rc == 0     Anlegen erfolgreich
+            < 0     Fehler
+   Eigenschaften der Pipe:
+   Solaris: beide Deskriptoren fuer Senden und Empfangen von 
+            Daten (bidirektionaler Datenkanal)
+            Senden ueber fd[0] - Empfang von fd[1]
+            Senden ueber fd[1] - Empfang von fd[0]
+   Linux:   unidirektionaler Datenkanal
+            fd[1] zum Senden
+            fd[0] zum Empfang
+   Pipe schliessen:
+   close (fd[0]);   bzw.
+   close (fd[1]);
+   Vererbung der Pipe:
+   pid = fork();  erzeugt einen Child-Prozess
+          Danach sind die geoeffneten Deskriptoren im Parent-
+          Prozess und im Child-Prozess benutzbar.
+          Im Parent- und im Child-Prozess sind die jeweils 
+          nicht verwendeten Seiten der Pipe zu schliessen:
+          z. B.: Parent   close (fd[1]);
+                 Child    close (fd[0]);
+
+
+2. benannte Pipes
+
+   Datenkanal basierend auf FIFO special File,
+   Zugriff erlaubt fuer Prozesse entsprechend den File-
+   Zugriffsrechten
+
+   Anlegen einer Pipe:
+   #include <sys/types.h>
+   #include <sys/stat.h> 
+   mode_t mode;     Zugriffsrechte
+   int rc;
+   char pname[100]; Pipename
+   mode = 0644;   Zugriffsrechte user - lesen und schreiben 
+                                 group und other - nur lesen
+   Pipename in pname eintragen (analog zu Filenamen)
+   rc = mkfifo (pname, mode);
+        rc == 0   Anlegen des special Files erfolgreich,
+                  die Pipe ist aber noch nicht geoeffnet!
+            < 0   Fehler - es darf noch kein File mit dem 
+                  angegebenen Namen vorhanden sein! 
+
+   Pipe oeffnen:
+   erfolgt mit gegenseitiger Ablaufsynchronisation, wenn  
+   der Sender die Pipe im Write-Only-Modus und 
+   der Empfaenger die Pipe im Read-Only-Modus oeffnet;
+   Ablaufsynchronisation bedeutet, dass die zuerst ausgefuehrte 
+   Open-Funktion auf die Abarbeitung der zweiten Open-Funktion 
+   wartet.
+   
+   Pipe als Stream oeffnen:
+   #include <stdio.h>
+   FILE *fp;
+   int fd2;
+   fp = fopen (pname, "r");  Empfaenger
+   fp = fopen (pname, "w");  Sender; die Pipe muss angelegt 
+        sein, sonst wird ein regulaeres File erstellt und es 
+        erfolgt keine Ablaufsynchronisation
+   Ermittlung des Filedeskriptors:
+   fd2 = fileno (fp);
+
+   Pipe oeffnen mit open():
+   #include <sys/types.h>
+   #include <sys/stat.h>
+   #include <fcntl.h>
+   int fd2;
+   fd2 = open (pname, O_RDONLY);  Empfaenger
+   fd2 = open (pname, O_WRONLY);  Sender
+   Die Pipe muss angelegt sein, sonst Fehler ENOENT.
+ 
+   Pipe schliessen:
+   fclose (fp);   bzw.
+   close  (fd2);
+ 
+
+3. Pipe-Zugriff
+
+   #include <sys/types.h>
+   #include <sys/uio.h>
+   #include <unistd.h>
+   char eab[100];
+   int rc, fd[2], fd2;
+   Pipe muss angelegt und geoeffnet sein
+   z. B. fuer unbenannte Pipe
+   rc = write (fd[1], eab, sizeof(eab));
+        rc > 0    Anzahl der gesendeten Bytes
+           < 0    Fehler 
+   rc = read (fd[0], eab, sizeof(eab));
+        rc > 0    Anzahl der empfangenen Bytes
+          == 0    Pipe wurde vom Sender geschlossen
+           < 0    Fehler 
+
+   analog Zugriff fuer benannte Pipes mit 
+     rc = read (fd2, eab, sizeof(eab));  bzw. 
+     rc = write (fd2, eab, sizeof(eab));
+   auch mit 
+     rc = fread (eab, sizeof(eab), 1, fp);  bzw.
+     rc = fwrite (eab, sizeof(eab), 1, fp);
+     Die gesendeten Daten sind aber erst nach Leerung 
+     des Schreibpuffers fuer den Empfaenger verfuegbar:
+        fflush(fp);
+
+   
+

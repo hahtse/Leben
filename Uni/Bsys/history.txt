@@ -1,0 +1,39 @@
+C-Shell - history
+
+Wenn mit  set history=n  die Shellvariable history gesetzt ist,
+speichert die csh die letzten  n  eingegebenen Kommandozeilen.			
+
+Anzeige der gespeicherten Kommandozeilen mit csh-Kommando: 	history
+
+Aufruf gespeicherter Kommandos:
+!!		wiederholt das zuletzt eingegebene Kommando
+!-n		wiederholt das n.-letzte Kommando
+!n		wiederholt das Kommando mit Nr. n (aus der history-Liste)
+!z		wiederholt das letzte mit der Zeichenkette z beginnende Kommando
+!?z		wiederholt das letzte die Zeichenkette z enthaltende Kommando
+
+Bezugnahme auf Argumente gespeicherter Kommandozeilen:
+!:0		0. Argument des letzten Kommandos (Kommandoname)
+!:x		x. Argument des letzten Kommandos	
+!^		1. Argument des letzten Kommandos
+!$		letztes Argument des letzten Kommandos
+!*		alle Argumente (ausser Kommandoname) des letzten Kommandos
+!:x-y		Argument  x bis y des letzten Kommandos
+!n:x		x. Argument des Kommandos mit Nr. n
+!z:x		x. Argument des letzten mit der Zeichenkette z beginnenden
+		Kommandos
+
+Modifikation gespeicherter Kommandozeilen
+^z1^z2^ 	wiederholt das zuletzt eingegebene Kommando,
+		wobei die Zeichenkette z1 durch die Zeichenkette z2 
+		ersetzt wird (nur 1. Vorkommen von z1)
+!z:s/z1/z2/	wiederholt das ausgewaehlte Kommando, wobei die 
+		Zeichenkette z1	durch die Zeichenkette z2 ersetzt wird
+		(nur 1. Vorkommen von z1)
+!z:gs/z1/z2/	wiederholt das ausgewaehlte Kommando, wobei die 
+		Zeichenkette z1	durch die Zeichenkette z2 ersetzt wird 
+		(jedes Vorkommen von z1)
+!...:p		die bei der eingegebenen History-Operation entstehende 
+		Kommandozeile wird ausgegeben, aber nicht ausgefuehrt
+
+

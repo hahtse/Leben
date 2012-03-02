@@ -1,0 +1,23 @@
+7. Uebung zum Fach Betriebssysteme II
+
+Fuer die Aufgabenstellung zur 3. Uebung ist eine modifizierte 
+Server-Version fuer Unix Domain STREAM-Sockets zu erstellen, 
+die mehrere Verbindungen auf der Basis paralleler Threads bedienen 
+kann. 
+Der main()-Thread soll auf das Eintreffen neuer Client-Anforderungen
+warten. Nach dem Eintreffen einer Anforderung ist ein neuer Thread 
+einzurichten, in dem die Bedienung dieser Anforderung erfolgt. Dazu 
+ist an den Thread der Socket-Deskriptor als Parameter zu uebergeben.
+Die Beendigung des Servers soll wieder ueber ein Signal eingeleitet 
+werden, das nur vom main()-Thread zu behandeln ist. Befindet sich 
+der Server zu diesem Zeitpunkt noch in Kommunikation mit einem Client, 
+so ist keine neue Verbindung mehr zuzulassen, die Beendigung aber 
+erst nach Abbau aller noch bestehenden Verbindungen durchzufuehren. 
+Im main()-Thread ist die Beendigung aller Kommunikations-Threads mit
+pthread_join() zu behandeln.
+Aufrufe von System- und Thread-Funktionen sind auf fehlerfreie 
+Ausfuehrung zu ueberpruefen und bei Fehler eine System-Fehler-
+nachricht auszugeben.
+
+Abgabetermin: 01.07.2011
+

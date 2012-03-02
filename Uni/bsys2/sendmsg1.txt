@@ -1,0 +1,151 @@
+sendmsg() / recvmsg()
+
+zur Uebertragung von Nachrichten zwischen Prozessen nach dem 
+Client-Server-Prinzip ueber Unix Domain Sockets
+
+1. benoetigte .h-Files: 
+    #include <sys/types.h> 
+    #include <sys/socket.h>
+    #include <sys/uio.h> 
+    #include <sys/un.h>
+   Link-Bibliotheken:
+    -lsocket
+
+2. benoetigte Strukturen
+   (in .h-Files definiert)
+
+   struct iovec: zur Verwendung mehrerer E/A-Bereiche
+    Solaris-Standarddefinition:
+     struct iovec {
+      caddr_t iov_base;  fuer 1 E/A-Bereichs-Adresse (= char *)
+      long    iov_len;   Laenge des E-Bereichs bzw. der A-Daten
+     };
+    Struktur nach Posix (Linux-Standard):
+     struct iovec {
+      void * iov_base;
+      size_t iov_len;
+     };
+    Auswahl der Posix-Variante unter Solaris mit:
+     #ifndef _XOPEN_SOURCE
+     #define _XOPEN_SOURCE
+     #endif
+     #ifndef _XOPEN_SOURCE_EXTENDED
+     #define _XOPEN_SOURCE_EXTENDED 1
+     #endif
+     vor den include-Anweisungen oder
+    entsprechende Optionsangaben beim Compileraufruf:
+     -D_XOPEN_SOURCE -D_XOPEN_SOURCE_EXTENDED=1
+    (unter Linux nicht erforderlich)
+
+
+   struct msghdr: zur Uebergabe von Adressdaten, 
+                                    iovec-Information und
+                                    Steuerdaten
+    Solaris-Standarddefinition:
+     struct msghdr {
+      void *    msg_name;      fuer Adressdaten
+      socklen_t msg_namelen;   Adresslaenge
+      struct iovec * msg_iov;  Adresse iovec-Vektor
+      int         msg_iovlen;  Anzahl Elemente in msg_iov
+      caddr_t  msg_accrights;  fuer Adresse von Steuerdaten
+      int   msg_accrightslen;  Laenge der Steuerdaten
+     };
+
+    Struktur nach Posix (Linux-Standard):
+     struct msghdr {
+      void *    msg_name;      fuer Adressdaten
+      socklen_t msg_namelen;   Adresslaenge
+      struct iovec * msg_iov;  Adresse iovec-Vektor
+      int         msg_iovlen;  Anzahl Elemente in msg_iov
+      void *     msg_control;  fuer Adresse von Steuerdaten
+      socklen_t msg_controllen;  Laenge der Steuerdaten
+      int          msg_flags;  nur Rueckgabe von Flags bei
+     };                        recvmsg()
+
+3. Nachrichten senden und empfangen ueber SOCK_STREAM-Sockets
+   Sockets erzeugen, Client und Server initialisieren 
+   siehe Sockstream.txt
+
+   weitere benoetigte Variablen:
+    struct msghdr mh;
+    struct iovec iov[1];  Elementanzahl entsprechend der
+                          Anzahl der E/A-Bereiche
+    char eab[LEN];        E/A-Bereich der Laenge LEN
+    int flags = 0;        ohne Flags
+
+   Struktur mh initialisieren:
+    mh.msg_name    = NULL;  bei SOCK_STREAM nicht benutzt
+    mh.msg_namelen = 0;
+    mh.msg_iov     = iov;   E/A-Vektor mit
+    mh.msg_iovlen  = 1;     1 Element
+   Steuerdaten-Komponenten nach Solaris-Standard:
+    mh.msg_msg_accrights    = NULL;  keine Steuerdaten
+    mh.msg_msg_accrightslen = 0;
+   Steuerdaten-Komponenten nach Posix:
+    mh.msg_control    = NULL;  keine Steuerdaten
+    mh.msg_controllen = 0;
+    mh.msg_flags      = 0;
+
+   Struktur iov initialisieren:
+    iov[0].iov_base = eab;  Adresse E/A-Bereich
+    iov[0].iov_len  = len;  Laenge des E-Bereichs bzw.
+                                   der A-Daten
+
+   Nachricht senden:
+    Daten in eab eintragen
+    rc = sendmsg (sockd, &mh, flags);
+       rc > 0   gesendete Byteanzahl
+       rc < 0   bei Fehler
+
+   Nachricht empfangen:
+    rc = recvmsg (sockd, &mh, flags);
+       rc > 0   empfangene Byteanzahl
+       rc < 0   bei Fehler
+       rc == 0  EOF-Bedingung; Socket wurde auf der Gegenseite
+                geschlossen
+
+4. Nachrichten senden und empfangen ueber SOCK_DGRAM-Sockets
+   Sockets erzeugen, Client und Server initialisieren 
+   siehe Sockdgram.txt
+
+   weitere benoetigte Variablen:
+    struct msghdr mh;
+    struct iovec iov[1];  Elementanzahl entsprechend der
+                          Anzahl der E/A-Bereiche
+    char eab[LEN];        E/A-Bereich der Laenge LEN
+    int flags = 0;        ohne Flags
+
+   Struktur mh initialisieren:
+   fuer Client:
+    mh.msg_name    = (char *)&server;  
+    mh.msg_namelen = sizeof(server);
+   fuer Server:
+    mh.msg_name    = (char *)&client;  
+    mh.msg_namelen = sizeof(client);
+   fuer Client und Server:
+    mh.msg_iov     = iov;   E/A-Vektor mit
+    mh.msg_iovlen  = 1;     1 Element
+   Steuerdaten-Komponenten nach Solaris-Standard:
+    mh.msg_msg_accrights    = NULL;  keine Steuerdaten
+    mh.msg_msg_accrightslen = 0;
+   Steuerdaten-Komponenten nach Posix:
+    mh.msg_control    = NULL;  keine Steuerdaten
+    mh.msg_controllen = 0;
+    mh.msg_flags      = 0;
+
+   Struktur iov initialisieren:
+    iov[0].iov_base = eab;  Adresse E/A-Bereich
+    iov[0].iov_len  = len;  Laenge des E-Bereichs bzw.
+                                   der A-Daten
+
+   Nachricht senden:
+    Daten in eab eintragen
+    rc = sendmsg (sockd, &mh, flags);
+       rc > 0   gesendete Byteanzahl
+       rc < 0   bei Fehler
+
+   Nachricht empfangen:
+    rc = recvmsg (sockd, &mh, flags);
+       rc > 0   empfangene Byteanzahl
+       rc < 0   bei Fehler
+

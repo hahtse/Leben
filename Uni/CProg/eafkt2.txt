@@ -1,0 +1,119 @@
+Fileverarbeitung
+
+Der Zugriff auf ein File (Datei - Datenbestand im Filesystem) 
+erfolgt ueber eine File-Variable. Deren Datentyp ist abhaengig 
+von der verwendeten Schnittstelle.
+Vor dem Filezugriff muss das File geoeffnet werden. Dabei wird 
+die File-Variable dem Datenbestand, gekennzeichnet durch den 
+Filenamen, zugeordnet.
+
+
+Standard - Ein- und Ausgabe-Funktionen
+
+Zur Nutzung der Funktionen muessen mit  #include <stdio.h> die 
+notwendigen Definitionen verfuegbar gemacht werden. 
+
+File-Variable
+   Datentyp  FILE *
+   z. B.: FILE *fp;
+
+Oeffnen eines Files
+   char fname[100];  Variable fuer Filename, evtl. mit Pfadangabe 
+   fp = fopen (fname, Modus);
+   Im Parameter  Modus  wird die Art des Zugriffs auf das File 
+   angegeben:
+     "r"   Modus read only  - das File kann nur gelesen werden.    
+     "w"   Modus write only - das File wird neu angelegt, und es 
+           koennen nur Daten geschrieben werden; falls bereits ein 
+           File mit dem Namen existiert, wird der bisherige Inhalt 
+           geloescht.
+     "a"   append-Modus - Daten werden immer an das aktuelle File-
+           Ende angefuegt.
+     "r+"  Modus read and write - Update-Modus, es koennen Daten 
+           gelesen und geschrieben (ueberschrieben) werden.
+     "a+"  Modus append and read - Daten werden an das aktuelle 
+           File-Ende angefuegt. Nach Positionierung ist auch Lesen 
+           von Daten moeglich.
+   Unter Windows sollte i. R. der Binaermodus, z. B. mit "rb+"  
+   eingestellt werden, weil sonst eine Transformation des  '\n'
+   in die Windows-Form erfolgt (auch bei Binaerdaten). Fuer die 
+   Portabilitaet von Programmen sollte der Binaermodus auch unter 
+   Unix verwendet werden.
+   Bsp.:   fp = fopen (fname, "rb+");
+   Funktionswert  fp:
+   != NULL  File wurde erfolgreich geoeffnet, die File-Variable 
+            kann benutzt werden
+   == NULL  Fehler beim Oeffnen des Files, die File-Variable kann
+            nicht benutzt werden
+
+File-Ein-/Ausgabe
+   int rc;
+   char eab[N];  E-/A-Bereich der Laenge N
+   int l;        Datensatzlaenge
+   int n = 1;    Anzahl der zu lesenden/schreibenden Datensaetze 
+                 i.R. 1
+
+ Eingabe:
+   rc = fread (eab, l, n, fp);
+     rc >  0  Anzahl der gelesenen Datensaetze
+     rc == 0  File-Ende-Bedingung oder
+              Fehler
+ 
+ Test auf File-Ende/Fehler:
+   feof(fp)   != 0 (true) bei File-Ende
+              == 0 (false) bei Fehler oder
+   ferror(fp) != 0 (true) bei Fehler
+              == 0 (false) bei File-Ende
+
+ Ausgabe:
+   rc = fwrite (eab, l, n, fp);
+     rc >  0  Anzahl der geschriebenen Datensaetze
+     rc == 0  Fehler
+
+Positionierung
+  aktuelle File-Position einstellen - wird fuer Direktzugriff 
+  (z. B. bei Aenderung von Datensaetzen) benoetigt
+    rewind (fp);   File auf File-Anfang einstellen
+    rc = fseek (fp, Position, Modus);
+      Position:   einzustellende File-Position, Angabe in Bytes
+                  File-Anfang = Byte-Nr. 0
+      Modus:      Bedeutung der Positionsangabe (Bezugspunkt)
+        SEEK_SET  Bezugspunkt der Positionsangabe ist der File-
+                  Anfang, d. h. Position = absolute Byte-Nr.
+                  Bsp.: fseek (fp, 0, SEEK_SET); 
+                         positioniert auf den Fileanfang
+        SEEK_CUR  Bezugspunkt ist die aktuelle Position, d. h.
+                  neue Position = aktuelle Position + Positions-
+                  angabe
+                  Positionsangabe <0 ist moeglich
+        SEEK_END  Bezugspunkt ist das File-Ende
+                  Position <0  = Byteanzahl vor File-Ende
+                  Position =0  = File-Ende (hinter dem letzten Byte)
+                  Position >0  moeglich (leerer Bereich wird 
+                               eingefuegt)
+                  Bsp.: fseek (fp, 0, SEEK_END);
+                        positioniert an das Fileende, d. h. hinter 
+                        das letzte Byte
+      rc == 0  Positionierung erfolgreich
+      rc <  0  Fehler, z. B. falsche Positionsangabe
+              Fehler
+ 
+  aktuelle File-Position ermitteln
+    long pos;
+    pos = ftell (fp);
+      pos >= 0  aktuelle File-Position (Byte-Nr. im File)
+      pos <  0  Fehler
+    Bsp.:  Ermittlung der Laenge des Files in Bytes
+           fseek (fp, 0, SEEK_END);
+           pos = ftell (fp);
+
+File schliessen
+  danach ist der Filezustand auf dem Datentraeger aktualisiert 
+  zweckmaessig bei Wechsel des Zugriffsmodus
+  fuer jeden Prozess ist nur eine begrenzte Anzahl gleichzeitig 
+  geoeffneter Files moeglich
+  danach ist bis zum erneuten Oeffnen des Files kein Zugriff auf 
+  das File mehr moeglich 
+    fclose (fp);
+		
+Weitere Einzelheiten sind den entsprechenden Manuals zu entnehmen.

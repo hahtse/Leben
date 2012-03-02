@@ -1,0 +1,42 @@
+#! /bin/csh
+
+if ($#argv<1) then
+	echo "Bitte Dateinamen eingeben: "
+	set datei = "$<"
+else
+	set datei = $argv[1]
+endif
+
+echo \
+
+
+if ($#argv<2) then
+	echo "Bitte String eingeben: "
+	set string1 = "$<"
+else
+	set string1 = $argv[2]
+endif
+
+echo $datei
+echo $string1
+
+if ($datei=='') then
+	echo "Leerer Dateiname, nutze passwd"
+	set datei = 'passwd'
+endif
+
+if ($datei=='passwd') then
+	ypcat passwd
+else 
+	cat $datei
+endif
+
+if (string1=!'') then
+	grep $string1
+else
+	echo cat $datei
+endif
+
+
+
+

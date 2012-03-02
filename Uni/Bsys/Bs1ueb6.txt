@@ -1,0 +1,25 @@
+6. Uebung zum Fach Betriebssysteme I
+
+Modifizieren Sie das Programm zur 5. Uebung auf folgende Weise:
+- Im Parent-Prozess sind 2 Child-Prozesse zu erzeugen. In jedem 
+  Child-Prozess ist ein neuer abzuarbeitender Programmcode mit 
+  execv() zu starten. Dieser Programmcode soll analog zur 
+  5. Uebung Primzahlen berechnen und die berechneten Primzahlen
+  in bestimmten Abstaenden ausgeben. Zur Zuordnung der Ausgaben
+  ist die jeweilige Prozessnummer mit auszugeben.
+- An die mit execv() zu startenden Programme sind der Endwert 
+  der Primzahlenberechnung und der Abstand fuer die Ausgaben als 
+  Argumente zu uebergeben.
+- Die Endwerte fuer die Primzahlenberechnungen und die Abstaende 
+  fuer die Ausgaben der Primzahlen in den Child-Prozessen sind als 
+  Kommandozeilen-Argumente beim Programmaufruf zu uebernehmen.
+  Eventuell fehlende Werte sind am Anfang des Parentprozesses 
+  einzugeben.
+- Im Parentprozess ist nach dem Einrichten der Childprozesse deren 
+  Status mit waitpid im Wechsel zu testen und bei Ende eines Child-
+  Prozesses auszugeben.
+
+Zur Bearbeitung der Programme ist make zu verwenden.
+
+Abgabetermin: 19.11.2010
+

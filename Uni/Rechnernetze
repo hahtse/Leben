@@ -1,0 +1,94 @@
+5 Tupel Informationen zur Netzwerkkommunikation:
+
+2 IP-Adressen
+2 Portadressen
+1x Protokolltyp
+
+Socket-API  -- Interafce für Zugriff auf Transportschicht
+	unter Unix über Socket Deskriptoren
+	Solaris 2 Sätze von Funktionen
+		API basierend auf BSD Netzwerk Fkt.
+		API 	~     auf X/Open- ~
+		"man -s3N"   BSD Fkt.
+		"man -s3XN"  X/Open-Fkt.
+
+
+
+Client Server Modell
+
+Server:	Zuerst gestartet
+	Socket einrichten
+	Wartezustand (passive Rolle)
+	Kommunikation (nach Protokoll)	 
+
+Client:	Start nach Server
+	Socket einrichten
+	Anforderung (aktive Rolle)
+	Kommunikation
+iterativer oder paralleler Server
+
+2.2 TCP SOCKETS UNTER UNIX
+
+	#include 	<sys/types.h>
+	"		<sys/socket.h>
+	"		<netinet/in.h>
+	"		<arpa/inet.h>
+
+	Compileraufruf mit 	-lsocket -lnsl (BSD)
+			oder	-lxnet	(X/Open)
+	Muss man bei Linux (angeblich) nicht angeben
+
+Socket - Erzeugung (Für Client und Server)
+
+	int s;
+	s=socket(Adressfamilie,Sockettyp,Protokoll);
+
+	Adressfamilie (auch Protokollfamilie)
+		AF_INET oder PF_INET 	für IPv4
+		AF_INET6		für IPv6
+
+	Sockettyp: SOCK_STREAM verbindungsorientierte Kommunikation über TCP
+	Protokoll: Protokollnr. 0 und SOCK_STREAM == TCP
+
+	s=socket(AF_INET,SOCK_STREAM,0);
+	if(s<0){perror("socket");exit(1)}
+
+TCP-Server
+	
+	Adressstruktur einrichten mit IP-Adresse und Port-Adresse
+	
+	struct socketaddr_in server;
+		server.sin_family = AF_INET;
+		server.sin_port = Portnummer;
+		server.sin_addr.s_addr = INADDR_ANY;
+
+	Portadressen: Adressraum 0...65535 (16 Bit)
+			separat für TCP und UDP
+		reservierte Ports: 0...1023 Standarddienste (nur im Superuser-Status)
+			z.B. 	ftp 	20
+					21
+				telnet
+		BSD: 	1024...5000 Bereich für kurzlebige Ports (für automatische Vergabe)
+			5000...65535 frei verfügbar
+		Solaris: 32768...65535 für kurzlebige Ports
+		IANA: 49152...65535
+		Praktikum: >= 50000
+
+Zusammenhang Adressstruktur - Socketdeskriptor
+	
+	int rc;
+	rc = bind(s,(struct sockaddr*)&server, sizeof(server));
+		rc == 0 -> shiny
+		if(rc<0){perror("bind"),exit(1);}
+
+Empfangsbereitschaft des Servers für Clientandorderungen
+	rc = listen(s,anzahl);
+	rc == 0 i.O. Warteschlange für Anforderung mir entspr. Anzahl an Warteplätzen
+	rc < 0 Fehler
+
+	int s2;
+	s2 = accept(s,0,0); 1 Anforderung aus Warteschlange bzw. warten (blockierend!)
+	s2 >= 0 i.O.
+	s2 < 0 Fehler
+
+	s2 für nachfolgende Komm. (s für Warteschlange!)

@@ -1,0 +1,7 @@
+4. Uebung
+
+Signalfolge bei NRZ-L, NRZ-I, AMI und Manchester-Kodierung fuer
+die Uebertragung des ASCII-Zeichens  'Y'  (Anfangszustand der 
+Leitung sei der Low-Pegel).
+
+

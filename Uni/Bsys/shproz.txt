@@ -1,0 +1,128 @@
+Bourne - Shell - Kommando - Prozeduren 
+
+sh - Prozeduren sollten in der ersten Zeile beginnen mit
+#! /bin/sh
+
+Bedingte Ausfuehrung von Kommandos
+  if Kommandoliste1; then      oder          if Kommandoliste1    
+    Kommandoliste2                           then Kommandoliste2         
+  else                                       else Kommandoliste3       
+   Kommandoliste3                            fi                          
+  fi
+Der else-Zweig ist optional.
+Kommandoliste z. B. in der Form Kommando1;Kommando2;... 
+Von der Kommandoliste1 ist der Exitwert des letzten Kommandos entscheidend 
+fuer die Auswahl des Zweiges: Exitwert  =  0  - then-Zweig, 
+                              Exitwert !=  0  - else-Zweig.
+Kaskadierung von if-Anweisungen ist moeglich
+  if Kommandoliste1; then   
+    Kommandoliste2
+  else if Kommandoliste3; then   oder        elif Kommandoliste3; then  
+      . . .                                    . . .
+    fi                                       fi   (nur 1 fi)
+  fi
+
+Ermittlung logischer Bedingungen
+In der Bourne-Shell sind keine logischen Ausdruecke definiert. Logische 
+Ausdruecke koennen deshalb nur mit Hilfe des Kommandos  test  ausgewertet 
+werden, das den Exitstatus = 0 oder  != 0  liefert, wenn der Ausdruck wahr 
+bzw. falsch ergibt.
+    test ausdruck  oder  [ ausdruck ]
+einige wichtige Notationen fuer den Ausdruck
+    -f filename  true, wenn das File existiert und regulaeres File ist
+    -d filename  true, wenn das File existiert und ein Directory ist
+    -s filename  true, wenn das File existiert und nicht leer ist
+    string       true, wenn string  nicht leer ist
+    $variable    true, wenn variable definiert ist
+Vergleich von Zeichenketten:
+    str1 = str2  true, wenn String str1 =  String str2
+    str1 != str2 true, wenn String str1 != String str2
+Vergleichsoperatoren fuer ganzzahlige Werte:
+    -eq  -ne  -gt  -ge  -lt  -le  mit den Bedeutungen
+     =   !=    >   >=    <   <= 
+Verknuepfung von Ausdruecken:
+	-a  log. Und
+	-o  log. Oder
+	!   log. Negation
+Zur Berechnung von arithmetischen Ausdruecken kann das Kommando
+  expr  verwendet werden.
+
+Fallunterscheidung 
+    case Variable in
+      Muster1) Kommandoliste1;;
+      Muster2) Kommandoliste2;;
+	. . .
+      *)       Kommandoliste;;   (optionaler sonst-Zweig)
+    esac
+Der Wert von Variable wird berechnet und mit den als Muster angegebenen
+Zeichen (* steht fuer ein beliebiges Muster) verglichen. Bei Gleichheit 
+wird die zugehoerige  Kommandoliste  abgearbeitet. Zur Behandlung von 
+Sonderzeichen in   Muster siehe  Beispiel-Prozedur   sh-case.
+
+Zyklen
+a)  while Kommandoliste1   (solange Exitwert des letzten Kommandos =0)
+    do                      oder    while Kommandoliste1; do   
+ 	Kommandoliste2
+   done
+b) until Kommandoliste1   (solange bis Exitwert des letzten Kommandos =0)
+   do                      oder     until Kommandoliste1; do   
+	Kommandoliste2
+   done
+c) for Variable in Wert1 Wert2 ...  oder
+   do                               for Variable in Wert1 Wert2 ...; do
+	Kommandoliste
+   done
+   Der Variablen werden nacheinander alle angegebenen Werte zugewiesen 
+   und damit die Kommandoliste ausgefuehrt.
+d) for Variable
+   do
+	Kommandoliste
+   done
+   Der Variablen werden die Positionsparameter $1, $2,... zugewiesen und 
+   damit die Kommandoliste ausgefuehrt.
+
+
+Variablen
+Es wird unterschieden zwischen Shellvariablen und Umgebungsvariablen.
+Shellvariablen sind nur in der aktuellen Shell definiert. Sie sind nicht 
+mehr definiert, wenn eine neue Shell aufgerufen wird (Aufruf einer 
+sh-Prozedur - ausser mit   . kommando) oder die aktuelle Shell beendet wird.
+Umgebungsvariablen bleiben nach Ende einer Kommando-Prozedur definiert.
+
+Variable anlegen und Wert zuweisen:
+    variable=wert    Shell-Variable, nur in aktueller sh gueltig
+      wert wird als Zeichenkette verarbeitet; 
+           auch Kommandosubstitution moeglich
+    read variable    Eingabe des Variablenwertes
+    export variable  Variable als Umgebungsvariable markieren
+    keine numerische Variablen 
+
+Anzeige:		set
+Variable loeschen:	unset variable oder variable=
+Bezug auf Variablen:	$variable
+
+Nicht definierte Variablen werden als leere Zeichenketten behandelt.
+ ${variable=wert}   falls variable nicht definiert: Benutzung und Zuweisung 
+                    von  wert  sonst Bezug auf den definierten Wert 
+ ${variable-wert}   falls variable nicht definiert: Benutzung von wert, 
+                    keine Zuweisung; sonst Bezug auf den definierten Wert
+ ${variable+wert}   falls variable definiert: Benutzung von wert, keine
+                    Zuweisung; sonst leere Zeichenkette
+ ${variable?text}   falls variable nicht definiert: Ausgabe von text und
+                    Abbruch der Kommandoprozedur
+
+Kommandozeilenargumente  $0, ..., $9
+  $0   Name der aufgerufenen Kommandoprozedur
+  kein direkter Zugriff auf Kommandozeilenargumente ab Nr. 10
+  Zugriff nur indirekt ueber  shift
+  $#   Anzahl der Kommandozeilenargumente (ausser $0)
+
+Variablen mit spezieller Bedeutung
+  $$        PID der aktuellen Shell	
+  $*        Folge aller Kommandozeilenargumente als eine 
+            Zeichenkette
+  $HOME     Home-Directory (Umgebungsvariable)
+  $PATH     Pfad fuer die Suche nach Kommandofiles (Umgebungsvariable) 
+  $PS1      Promptzeichen (Standard $)
+  $?        Exitstatus des letzten Kommandos
+

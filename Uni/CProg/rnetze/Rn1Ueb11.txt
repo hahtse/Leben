@@ -1,0 +1,9 @@
+11. Uebung
+
+Welche maximale Segmentlaenge wuerde sich in einem aus 2 
+Segmenten und 1 Repeater bestehenden 100BaseT-Ethernet-LAN 
+ergeben, wenn nur die Bedingungen fuer die Kollisionserkennung zu 
+erfuellen waeren (unter der Annahme, dass die Segmente ueber die 
+festgelegte Laenge hinaus vergroessert werden koennten) ? Signal
+geschwindigkeit 2/3c und Repeater-Durchlaufzeit 1 Mikrosekunde.
+

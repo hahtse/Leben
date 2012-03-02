@@ -1,0 +1,52 @@
+4. Uebung zum Fach C-Programmierung
+
+
+Das zur 3. Uebung erstellte Programm ist so zu 
+modifizieren, dass die Listenelemente mit den Komponenten
+
+  struct element {
+    struct element *next;  /* Zeiger auf das naechste	
+                              Listenelemente */
+    char *zeichenkette;    /* Zeiger auf die Zeichenkette */
+  } ;
+
+eine sortierte verkettete Liste bilden. Die zeilenweise einge-
+lesenen Zeichenketten sind wieder in dynamisch angeforderte 
+Speicherbereiche zu uebertragen sind, deren Adresse in die eben-
+falls dynamisch angeforderte Struktur einzutragen ist.
+
+Dazu sind folgende Funktionen zu erstellen:
+
+- In einer ersten Funktion ist die Position zu ermitteln, an 
+  der das neue Listenelement entsprechend der lexikographischen
+  Reihenfolge der Zeichenketten in die Liste einzuordnen ist. 
+  Uebergabeparameter sind die Adressen des Listenanfangs und 
+  des neue Listenelements. Als Funktionswert ist die Adresse 
+  des Listenelements zurueckzugeben, nach dem das neue Listen-
+  element eingefuegt werden soll.
+
+- Durch eine zweite Funktion ist das Einfuegen des neuen Listen-
+  elements an der durch die erste Funktion ermittelten Position 
+  auszufuehren. Uebergabeparameter sind die Adressen des Listen-
+  anfangs, des neue Listenelements und der Einfuegeposition. Als 
+  Funktionswert ist die Adresse des evtl. veraenderten Listen-
+  anfangs zurueckzugeben.
+
+- Durch eine dritte Funktion ist die sortierte Liste auszugeben. 
+
+- Die Zeichenketten der sortierten Liste sind durch eine vierte 
+  Funktion sequentiell nach einer Zeichenfolge (auch als Teil-
+  folge) zu durchmustern, die als Kommandozeilenargument ueber-
+  geben wird. Die Zeichenfolge kann evtl. in mehreren Listen-
+  elementen enthalten sein. Es ist die gefundene Zeichenkette 
+  und die sequentielle Nummer des betreffenden Elements inner-
+  halb der Liste auszugeben.
+
+Verwenden Sie als Testdaten die im File 
+/home/reimann/pub/inb09.txt oder /home/reimann/pub/mib09.txt  
+gespeicherte Namensliste mittels Fileumlenkung zur Eingabe 
+ueber stdin.
+
+
+Abgabetermin: 21.05.2010
+

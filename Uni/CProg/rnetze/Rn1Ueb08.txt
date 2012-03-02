@@ -1,0 +1,5 @@
+8. Uebung
+
+Welche CRC-Bitfolge ergibt sich fuer  N=1110110 und G=1101 ?
+Welchen Aufbau hat das zugehoerige Schieberegister ?
+

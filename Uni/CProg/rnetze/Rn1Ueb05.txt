@@ -1,0 +1,7 @@
+5. Uebung
+
+Ermittlung der mittleren Anzahl der Pegeluebergaenge je 
+Bitperiode fuer die Kodierungsverfahren NRZ-L, NRZ-I, AMI, 
+Manchester und Differential-Manchester fuer die Bitfolgen:
+0000000000 . . . ,  1010101010 . . .  und  1111111111 . . .
+

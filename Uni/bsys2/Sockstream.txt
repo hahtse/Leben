@@ -1,0 +1,83 @@
+Unix-Domain-STREAM-Sockets
+
+zur Kommunikation von Prozessen nach dem Client-Server-Prinzip 
+basierend auf special Files
+
+1. benoetigte .h-Files: 
+    #include <sys/types.h> 
+    #include <sys/socket.h> 
+    #include <sys/un.h>
+   Link-Bibliotheken:
+    -lsocket
+
+2. Socket-Erzeugung fuer Client und Server
+
+   Socket-Deskriptoren anlegen: 
+    int s, s2;	Socket-Deskriptor-Variablen
+    s = socket (AF_UNIX, SOCK_STREAM, 0); 
+    Adressfamilie   AF_UNIX  (Unix Domain Socket) 
+    Sockettyp       SOCK_STREAM 
+    Protokollnummer 0   (Standardprotokoll)
+      s <  0  Fehler
+        >= 0  kein Fehler
+
+   Adress-Struktur anlegen: 
+    struct sockaddr_un server; 
+    server.sun_family	= AF_UNIX; 
+    strcpy (server.sun_path, Socket-Filename);
+
+3. Server-Initialisierung
+
+   Adress-Struktur mit Socket verbinden:
+    int rc; 
+    unlink (server.sun_path); Socket-File darf noch 
+                              nicht existieren 
+    rc = bind (s, (struct sockaddr*)&server, sizeof(server));
+       rc <  0  Fehler 
+          == 0  kein Fehler, das Socket-File wird angelegt. 
+
+   Warteschlange fuer Socket einrichten: 
+    rc = listen ( s, 5 );  5 Warteschlangenplaetze
+       rc <  0  Fehler 
+          == 0  kein Fehler 
+
+   Warteschlange auf Verbindungsanforderung abfragen 
+   (warten, falls keine vorhanden) 
+    s2 = accept ( s, 0, 0 ); 
+    Es wird ein zweiter Socketdeskriptor s2 erzeugt, der im 
+    weiteren fuer die Datenuebertragung zu benutzen ist!
+       sockd2 <  0  Fehler
+              >= 0  kein Fehler
+
+4. Client-Initialisierung
+
+   Dienst-Anforderung an den Server: 
+    rc = connect(s, (struct sockaddr*)&server, sizeof(server));
+       rc <  0  Fehler 
+          == 0  kein Fehler 
+
+5. Datenuebertragung
+
+    int l, flag=0;
+    char eab[LEN];  E/A-Bereich der Laenge LEN
+
+   Senden:
+    l = write ( s, eab, Datenlaenge);
+      oder
+    l = send ( s, eab, Datenlaenge, flag);
+      l >  0  Anzahl der tatsaechlich gesendeten Bytes bzw.
+      l <  0  bei Fehler
+
+   Empfangen:
+    l = read ( s, eab, sizeof(eab));
+      oder
+    l = recv (s, buff, sizeof(eab), flag); 
+      l >  0  Anzahl der tatsaechlich empfangenen Bytes bzw.  
+      l <  0  bei Fehler
+      l == 0  durch Gegenseite wurde die Kommunikation beendet
+
+6. Datenuebertragung beenden
+
+    close ( s );
+    Auf der Gegenseite wird read() bzw. recv() mit der EOF-
+    Bedingung (Funktionswert 0) beendet.

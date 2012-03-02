@@ -1,0 +1,21 @@
+4. Uebung zum Fach Rechnernetze II
+
+
+Untersuchen Sie die Blockbildung bzw. Fragmentierung durch TCP 
+anhand eines Client-Server-Paares. Durch entsprechende Wahl der 
+IP-Adressen ist abzusichern, dass eine Datenuebertragung ueber 
+das LAN stattfindet!
+Es ist dazu ein Datenfeld geeigneter Groesse (mehrere Kbyte) 
+wahlweise in Saetzen mit variierbarer, jeweils fester Laenge 
+(byteweise, mehrere Bytes ... gesamtes Datenfeld als 1 Daten-
+satz) zu senden. Auf der Gegenseite wird versucht, die gesamten 
+Daten als 1 Datenblock zu empfangen. Der Empfang ist so lange 
+zu wiederholen bis die Verbindung durch den Client geschlossen 
+wird. Die Laenge der tatsaechlich empfangenen Daten ist nach 
+jedem Empfang auszugeben.
+Modifizieren Sie den ersten Test, indem zwischen den Sende-
+aktionen Zeitverzoegerungen verschiedener Laenge eingefuegt 
+werden.
+Welches Verhalten entsteht, wenn statt der Zeitverzoegerung vom 
+Empfaenger eine Antwort gesendet wird ?
+

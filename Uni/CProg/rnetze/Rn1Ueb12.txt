@@ -1,0 +1,7 @@
+12. Uebung
+
+Berechnung der mittleren Wartezeit fuer die 4. Wiederholung und 
+der maximalen Wartezeit fuer die 13. Wiederholung entsprechend 
+der Backoff-Strategie des Ethernet-Mediumzugriffs-Verfahrens nach 
+vorausgegangenen Kollisionen.
+

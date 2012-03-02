@@ -1,0 +1,91 @@
+
+          Kurze Uebersicht zum  vi - Editor
+          --------------------------------
+
+Aufruf mit    vi file1 file2 ...
+
+
+3 Arbeitsmodi:
+
+- Kommando-Modus (normaler Modus; Modus nach vi-Aufruf) 
+   Eingabe von Editorkommandos moeglich (Abschluss ohne ENTER)
+
+- Eingabe- bzw. Text-Modus 
+   wird erreicht nach den Editorkommandos a A i I o O c C s S R
+   Eingabe von (Programm-) Text moeglich
+   Verlassen mit ESC-Taste
+
+- letzte Zeile 
+   wird erreicht nach Eingabe von : / ?
+   fuer spezielle Kommandos (s.u.)
+   Abschluss mit ENTER
+
+
+
+ausgewaehlte Kommandos fuer die letzte Zeile:
+
+:w   geaendertes File abspeichern (write)
+:q   Editor beenden (nach vorherigem :w) (quit)
+:wq  Kombination von :w und :q (auch mit ZZ)
+:q!  Editorende erzwingen (ohne abspeichern)
+:w filename    Text in anderes File speichern
+:e filename    angegebenes File editieren
+:e!  File neu editieren, bisherige Aenderungen ignorieren
+:n   naechstes File aus der Aufrufliste editieren
+:sh  shell-Aufruf mit Rueckkehr zum vi
+/text     nach text vorwaerts suchen
+?text     nach text rueckwaerts suchen
+
+
+
+ausgewaehlte Editorkommandos:
+
+* Text-Eingabe und Aenderung
+
+a    anfuegen ab Cursorposition (append)
+i    einfuegen vor Cursorposition (insert)
+A    anfuegen am Zeilenende
+I    einfuegen vor 1. sichtbares Zeichen
+o    neue Zeile einfuegen unter der aktuellen (open)
+O    dto. ueber der aktuellen
+c    Zeichen auf Cursorposition aendern (change)
+C    Rest der Zeile aendern
+rz   aktuelles Zeichen durch z ersetzen (replace)
+R    aktuelles Zeichen durch den folgenden Text ersetzen
+s    wie R (substitute)
+S    aktuelle Zeile durch den folgenden Text ersetzen
+
+
+* Loeschen
+
+x    aktuelles Zeichen
+X    Zeichen vor Cursor
+dw   aktuelles Wort
+dd   aktuelle Zeile
+ndd  n Zeilen ab der aktuellen
+D    Rest der Zeile
+J    Zeilenende loeschen, d.h. 2 Zeilen verbinden (Join)
+
+
+* Cursorpositionierung
+
+h    1 Zeichen <-
+l    1 Zeichen -> (oder Leertaste)
+j    1 Zeile nach unten (oder ENTER)
+k    1 Zeile nach oben
+w    1 Wort vorwaerts
+b    1 Wort rueckwaerts
+e    Wortende
+H    1. Bildschirmzeile
+L    letzte Bildschirmzeile
+M    mittelste Bildschirmzeile
+0    Zeilenanfang
+$    Zeilenende
+^    erstes sichtbares Zeichen
+Ctrl F    Bildschirm vorwaerts rollen (Forward)
+Ctrl B    Bildschirm rueckwaerts rollen (Backward)
+Ctrl D    halben Bildschirm nach unten rollen (Down)
+Ctrl U    halben Bildschirm nach oben rollen (Up)
+nG   auf n. Zeile des Files
+     (n=1 Fileanfang, n weglassen Fileende)
+

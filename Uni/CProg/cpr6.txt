@@ -1,0 +1,15 @@
+6. Uebung zum Fach C-Programmierung
+
+Das zur 5. Uebung erstellte C-Programm ist um eine Aenderungs-
+funktion zu erweitern.
+Der zu aendernde Datensatz soll ueber die einzugebende Daten-
+satznummer ausgewaehlt werden. Die zu dieser Datensatznummer 
+gespeicherten Daten sind auszugeben. Die Aenderung dieser Daten 
+ist nochmals zu bestaetigen. Nach erfolgter Bestaetigung sind 
+die zu aendernden Daten einzugeben. Erfolgt dabei eine leere 
+Eingabe (nur mit Enter), ist der bisherige Inhalt der betreffenden 
+Komponente beizubehalten. 
+Der geaenderte Datensatz ist auf derselben Fileposition abzu-
+speichern, auf der der urspruengliche Datensatz gespeichert war.
+
+Abgabetermin: 18.06.2010

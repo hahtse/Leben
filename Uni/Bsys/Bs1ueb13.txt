@@ -1,0 +1,30 @@
+13. Uebung zum Fach Betriebssysteme I
+
+Es sind zwei C-Programme zu erstellen, die eine Datenuebertragung 
+ueber benannte Pipes ausfuehren. 
+Als Senderprogramm kann die Loesung aus der 12. Uebung verwendet 
+werden. Darin werden ueber stdin eingegebenen Zeichenketten in 
+eine benannte Pipe geschrieben, wobei jedes Senderprogramm seine 
+eigene Pipe anlegt. Um dasselbe Senderprogramm mehrfach parallel 
+ausfuehren zu koennen, sollen die Pipenamen erzeugt werden, z. B. 
+aus einer Sendernummer, die als Kommandozeilenargument angegeben 
+wird. Es ist zu pruefen, dass der erzeugte Pipename noch nicht 
+existiert. Mit Ctrl-D wird das Senden beendet, die betreffende 
+Pipe geschlossen und das Senderprogramm beendet.
+Das Empfaengerprogramm soll analog zur 12. Uebung simultan Daten 
+von bis zu 3 Sendern empfangen koennen. Die Pipenamen sind dabei 
+nach demselben Prinzip wie in den Sendern zu bilden und zu pruefen 
+ob die Pipe existiert. Die gefundenen Pipes sind auf anliegende 
+Daten zu pruefen und die empfangenen Zeichen auf stdout auszugeben. 
+Der parallele Datenempfang aus den Pipes ist aber nicht ueber Child-
+Prozesse sondern ueber nicht blockierendes read zu realisieren. Die 
+erkannten Pipes sind also abwechselnd auf anliegende Daten zu 
+pruefen.
+Beim Eintreffen der EOF-Bedingung (der betreffende Sender wurde 
+beendet) wird die Pipe durch den Empfaenger geloescht. 
+Das Empfaengerprogramm wird beendet, wenn kein Sender mehr aktiv 
+ist.
+Zur Bearbeitung der Programme ist make zu verwenden.
+
+Abgabetermin: 21.01.2011
+

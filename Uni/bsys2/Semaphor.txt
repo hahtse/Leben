@@ -1,0 +1,117 @@
+Semaphore (IPC - Paket)
+
+zur Synchronisation des Zugriffs von Prozessen auf gemeinsam 
+genutzte Ressourcen
+
+1. benoetigtes .h-File:
+   #include <sys/sem.h>
+
+2. Anlegen einer Semaphormenge
+
+   Eine Semaphormenge kann mehrere Semaphore enthalten, die 
+   mit 1 atomaren Semaphor-Operation gesetzt werden koennen.
+   int semid;     ID-Variable der Semaphormenge
+   int semflag;   Flags und Zugriffsrechte
+   int nsems;     Anzahl der Semaphore in der 
+                  anzulegenden Menge
+   key_t semkey;  eindeutige Kennung
+   semkey = 17;   willkuerlicher Wert >0 oder 
+                  ftok() verwenden s. u.
+   nsems = 1;     Semaphormenge mit 1 Semaphor
+   semflag = IPC_CREAT | 0644;
+             IPC_CREAT - neue Semaphormenge anlegen, falls fuer
+                  diesen semkey noch nicht vorhanden
+             0644 Zugriffsrechte analog zu Files
+                  (user group other)
+
+   Semaphormenge anlegen:
+   bzw. ID einer mit diesem semkey bereits angelegten 
+   Semaphormenge zurueckgeben
+   semid = semget (semkey, nsems, semflag);
+           semid >= 0 systemweit eindeutiger ID
+                  < 0 Fehler
+
+3. Semaphor-Operationen
+
+   vordefinierte Struktur zur Beschreibung der auszufuehrenden
+   Semaphor-Operationen:
+   struct sembuf {    
+     short sem_num; Nummer des betreffenden Semaphors 
+                    (Nummerierung ab 0)      
+     short sem_op;  mit diesem Semaphor auszufuehrende 
+                    Operation
+     short sem_flg; Operations-Flag
+   };
+
+   struct sembuf lock; Variable muss alle Semaphor-Operationen 
+     enthalten, die mit 1 Schritt (atomar) auszufuehren sind 
+     (fuer alle angegebenen Semaphore oder keine Operation, 
+      falls mindestens 1 Semaphor nicht frei ist)
+     haeufig als Vektor zu definieren
+   int anz;  Anzahl der zu bearbeitenden Vektorelemente
+   int rc;
+   rc = semop (semid, &lock, anz);
+        rc == 0  Operation ohne Fehler
+            < 0  Fehler - Fehlercode auswerten
+
+   auszufuehrende Semaphor-Operation in lock.sem_op:
+   Wirkung haengt ab vom aktuellen Semaphorwert semval >= 0
+     semval == 0  Semaphor ist frei 
+     semval  > 0  Semaphor ist besetzt
+     sem_op  = 0  Warteoperation:
+                  wenn semval == 0  kein Warten
+                  wenn semval  > 0  warten bis semval=0 wird, 
+                       d. h. semop() blockiert
+     sem_op  > 0  neuer Semaphorwert semval := semval + sem_op 
+                  kein Warten
+     sem_op  < 0  wenn |sem_op| <= semval: neuer Semaphorwert
+                  semval := semval - |sem_op| 
+                  kein Warten
+                  wenn |sem_op| > semval: warten bis 
+                  semval >= |sem_op| wird 
+                  (semval wird nicht < 0 !)
+     kein Warten, wenn sem_flg = IPC_NOWAIT
+     Warten bricht ab, wenn die Semaphormenge beseitigt wird 
+     oder der Prozess durch ein Signal unterbrochen wird.
+   Operations-Flags:
+     sem_flg = 0  keine Modifikation
+     sem_flg = IPC_NOWAIT  semop() ohne Blockierung
+     sem_flg = SEM_UNDO    Semaphor-Abgleichwert des Systems 
+               wird aktualisiert; notwendig, damit bei  
+               Prozess-Abbruch alle Semaphor-Operationen 
+               rueckgaengig gemacht werden koennen
+   
+4. Steueroperation
+
+   Semaphormenge aus System entfernen (bleibt sonst bestehen):
+     int rc;
+     rc = semctl (semid, 0, IPC_RMID, 0);
+          rc == 0  Operation ohne Fehler
+              < 0  Fehler - Fehlercode auswerten
+
+   aktuellen Semaphorwert fuer Semaphor 0 abfragen:
+     int semval;
+     semval = semctl (semid, 0, GETVAL, 0);
+
+   Semaphor 0 mit Semaphorwert 1 initialisieren:
+     union semun {
+       int val;
+       struct semid_ds *buf;
+       ushort_t *array;
+     } semval;
+     semval.val = 1;
+     rc = semctl (semid, 0, SETVAL, semval);
+     Das Setzen von Semaphorwerten mit semctl() ist nicht als 
+     Semaphor-Operation analog zu semop() anwendbar!
+
+
+5. IPC-key-Erzeugung
+
+   key_t key;
+   char fname[100];  Filename, auf das Zugriffsrecht besteht
+   int id;           Wert im Bereich 1,...,255 modifiziert 
+                     key-Erzeugung
+   key = ftok (fname, id);
+         key > 0     systemweit (nahezu) eindeutiger key
+             < 0     Fehler - Fehlercode auswerten
+

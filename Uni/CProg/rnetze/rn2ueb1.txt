@@ -1,0 +1,24 @@
+1. Uebung zum Fach Rechnernetze II
+
+
+Es ist ein TCP-Client-Server-Paar zu erstellen, das eine 
+wechselseitige Kommunikation zwischen Client und Server 
+durchfuehrt.
+Eine am Client bzw. Server ueber stdin eingegebene Zeichen-
+folge wird zum Kommunikationspartner uebertragen, der die 
+empfangene Nachricht ueber stdout ausgibt. Nach Uebertragung 
+einer Zeile wird die Uebertragungsrichtung und damit der Ort 
+der Ein- und Ausgabe gewechselt. 
+Mit Eingabe von Ctrl-D auf Client oder Server soll die 
+Kommunikation und auch die Verbindung beendet werden. Dazu ist 
+ein Ende-Protokoll einzusetzen, das absichert, dass der 
+Verbindungsabbau durch den Client eingeleitet wird. 
+Der Server ist als paralleler Server anzulegen, der mit 
+mehreren Clients gleichzeitig kommunizieren kann. Die 
+Beendigung des Servers soll ueber ein Signal (z. B. Ctl-C) 
+erfolgen. Dabei ist mit einer Signal-Behandlungsfunktion 
+dafuer zu sorgen, dass der Server erst beendet wird, wenn 
+alle Verbindungen zu Clients geschlossen sind.
+Aufrufe von Systemfunktionen sind auf fehlerfreie Ausfuehrung 
+zu ueberpruefen.
+

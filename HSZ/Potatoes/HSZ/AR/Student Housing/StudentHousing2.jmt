@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<hotpot-jmatch-file>
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <rdf:Description rdf:about="">
+    <dc:creator>HC</dc:creator>
+    <dc:title>Paris Student Housing 2/3</dc:title>
+  </rdf:Description>
+</rdf:RDF><version>6</version>
+
+<data>
+<title>Paris Student Housing 2/3</title>
+
+<timer><seconds>60</seconds><include-timer>0</include-timer></timer>
+
+<reading>
+<include-reading>1</include-reading>
+<reading-title>Student Housing</reading-title>
+<reading-text>&amp;#x003C;object classid=&quot;clsid:02bf25d5-8c17-4b23-bc80-d3488abddc6b&quot; data=&quot;../Zagreb/ar-b_unfinished-piece_n-ok.wav&quot; width=&quot;100&quot; height=&quot;30&quot; type=&quot;audio/quicktime&quot;&amp;#x003E;&amp;#x003C;param name=&quot;src&quot; value=&quot;../Zagreb/ar-b_unfinished-piece_n-ok.wav&quot; /&amp;#x003E; &amp;#x003C;param name=&quot;autoplay&quot; value=&quot;false&quot; /&amp;#x003E; &amp;#x003C;param name=&quot;controller&quot; value=&quot;true&quot; /&amp;#x003E; &amp;#x003C;object class=&quot;MediaPlayerNotForIE&quot; type=&quot;video/quicktime&quot; data=&quot;../Zagreb/ar-b_unfinished-piece_n-ok.wav&quot; width=&quot;100&quot; height=&quot;30&quot;&amp;#x003E;  &amp;#x003C;param name=&quot;src&quot; value=&quot;../Zagreb/ar-b_unfinished-piece_n-ok.wav&quot; /&amp;#x003E; &amp;#x003C;param name=&quot;autoplay&quot; value=&quot;false&quot; /&amp;#x003E; &amp;#x003C;param name=&quot;controller&quot; value=&quot;true&quot; /&amp;#x003E; &amp;#x003C;/object&amp;#x003E; &amp;#x003C;/object&amp;#x003E;
+
+Slovenian architects OFIS won first prize in an invited competition 
+to built 192 student apartments in Paris
+
+Student housing presents a great area of opportunity for architects, even when the budget is tight, because the target group is relatively easy to please. Usually with a teenager&amp;#x2019;s room in the family home as their only reference point, most students are not very demanding housing consumers. They can appreciate, for instance, the charm of living in shipping containers on the outskirts of the city. Nonetheless, some pretty sophisticated accommodation has been designed and built for this target group in recent years, both in university campuses and in urban surroundings.
+
+OFIS&amp;#x2019;s winning design for a hall of residence with 192 studios, is one example of this recent refinement. It is located in the 19th arrondissement for which Reichen &amp;#x0026; Robert architects have developed a masterplan. The goal is to complete the project by the end of 2011, before the new tramway starts operation in this area. The tight construction timetable, combined with the demand for an energy efficiency rating that meets the City of Paris&amp;#x2019;s climate plan, prompted OFIS to opt for a rather simple design. Straightforward solutions also suit the maintenance and mangement requirements of student housing complexes.
+
+The site is a narrow plot of 11 by 200 metres.The projects consists of two buildings, almost 30 metres in height, connected by a communal garden where the main access to the two buildings is also located. The upper floors of both buildings contain studios, each with its own outdoor space, while the ground floor contains some collective facilities and a number of wheelchair-accessible studios. Most studios are for single use, but on each floor there is also one studio for a couple. 
+
+The most eye-catching part of the project is the east elevation which is composed of bamboo-clad loggias. Their irregularity creates a dynamic rhythm and breaks down the scale of the building. The loggias have bamboo sun screens to keep out the sunlight, but the idea could also work in reverse, hiding the students&amp;#x2019; sometimes unconventional way of living from public view.</reading-text>
+
+</reading>
+
+<matching-exercise>
+<default-right-item>???
+</default-right-item>
+
+<pair>
+<left-item><text>win</text>
+<fixed>1</fixed>
+</left-item>
+<right-item><text>a price</text>
+<fixed>0</fixed>
+</right-item></pair>
+
+<pair>
+<left-item><text>an invited</text>
+<fixed>1</fixed>
+</left-item>
+<right-item><text>party</text>
+<fixed>0</fixed>
+</right-item></pair>
+
+<pair>
+<left-item><text>tight</text>
+<fixed>1</fixed>
+</left-item>
+<right-item><text>money</text>
+<fixed>0</fixed>
+</right-item></pair>
+
+<pair>
+<left-item><text>target</text>
+<fixed>1</fixed>
+</left-item>
+<right-item><text>people</text>
+<fixed>0</fixed>
+</right-item></pair>
+
+<pair>
+<left-item><text>the outskirts</text>
+<fixed>1</fixed>
+</left-item>
+<right-item><text>of a village</text>
+<fixed>0</fixed>
+</right-item></pair>
+
+<pair>
+<left-item><text>urban</text>
+<fixed>1</fixed>
+</left-item>
+<right-item><text>context</text>
+<fixed>0</fixed>
+</right-item></pair>
+
+<pair>
+<left-item><text>winning</text>
+<fixed>1</fixed>
+</left-item>
+<right-item><text>prize</text>
+<fixed>0</fixed>
+</right-item></pair>
+
+<pair>
+<left-item><text>develop</text>
+<fixed>1</fixed>
+</left-item>
+<right-item><text>a town plan</text>
+<fixed>0</fixed>
+</right-item></pair>
+
+<pair>
+<left-item><text>eye</text>
+<fixed>1</fixed>
+</left-item>
+<right-item><text>moving</text>
+<fixed>0</fixed>
+</right-item></pair>
+
+<pair>
+<left-item><text>east</text>
+<fixed>1</fixed>
+</left-item>
+<right-item><text>section</text>
+<fixed>0</fixed>
+</right-item></pair>
+</matching-exercise>
+</data>
+
+<hotpot-config-file>
+<jmatch>
+<exercise-subtitle>Matching exercise</exercise-subtitle>
+<instructions>Match the items on the right to the items on the left.</instructions>
+<next-ex-url>nextpage.htm</next-ex-url>
+<send-email>0</send-email>
+<show-limited-questions>0</show-limited-questions>
+<questions-to-show>1</questions-to-show>
+<shuffle-questions>0</shuffle-questions>
+<separate-javascript-file>0</separate-javascript-file>
+<next-caption>Next</next-caption>
+<delete-caption>Delete</delete-caption>
+<guess-correct>Correct! Well done.</guess-correct>
+<guess-incorrect>Sorry! Try again. Incorrect matches have been removed.</guess-incorrect>
+</jmatch>
+
+<global>
+<your-score-is>Your score is </your-score-is>
+<correct-indicator>:-)</correct-indicator>
+<incorrect-indicator>X</incorrect-indicator>
+<process-for-rtl>0</process-for-rtl>
+<include-scorm-12>0</include-scorm-12>
+<times-up>Your time is over!</times-up>
+<check-caption>Check</check-caption>
+<ok-caption>OK</ok-caption>
+<next-ex-caption>=&amp;#x003E;</next-ex-caption>
+<back-caption>&amp;#x003C;=</back-caption>
+<contents-caption>Index</contents-caption>
+<include-next-ex>1</include-next-ex>
+<include-contents>1</include-contents>
+<include-back>0</include-back>
+<contents-url>contents.htm</contents-url>
+<graphic-url></graphic-url>
+<font-face>Geneva,Arial,sans-serif</font-face>
+<font-size>small</font-size>
+<page-bg-color>#ffffff</page-bg-color>
+<title-color>#000000</title-color>
+<ex-bg-color>#ffffff</ex-bg-color>
+<text-color>#000000</text-color>
+<link-color>#0000FF</link-color>
+<vlink-color>#0000CC</vlink-color>
+<nav-bar-color>#0080ff</nav-bar-color>
+<formmail-url>http://yourserver.com/cgi-bin/FormMail.pl</formmail-url>
+<email>you@yourserver.com</email>
+<name-please>Please enter your name:</name-please>
+<user-string-1>one</user-string-1>
+<user-string-2>two</user-string-2>
+<user-string-3>three</user-string-3>
+<header-code></header-code>
+</global>
+</hotpot-config-file>
+</hotpot-jmatch-file>

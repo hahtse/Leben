@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'Preprocessing.ui'
 #
-# Created: Tue Mar  6 15:26:05 2012
+# Created: Wed Mar  7 16:20:45 2012
 #      by: PyQt4 UI code generator 4.7.3
 #
 # WARNING! All changes made in this file will be lost!
@@ -82,9 +82,9 @@ class Ui_Fenster(object):
         self.l_miscellaneous = QtGui.QLabel(self.tab_general)
         self.l_miscellaneous.setGeometry(QtCore.QRect(460, 350, 111, 16))
         self.l_miscellaneous.setObjectName("l_miscellaneous")
-        self.lv_input_files = QtGui.QListWidget(self.tab_general)
-        self.lv_input_files.setGeometry(QtCore.QRect(10, 30, 281, 192))
-        self.lv_input_files.setObjectName("lv_input_files")
+        self.lw_input_files = QtGui.QListWidget(self.tab_general)
+        self.lw_input_files.setGeometry(QtCore.QRect(10, 30, 281, 192))
+        self.lw_input_files.setObjectName("lw_input_files")
         self.l_spatial_filtering = QtGui.QLabel(self.tab_general)
         self.l_spatial_filtering.setGeometry(QtCore.QRect(300, 350, 111, 20))
         self.l_spatial_filtering.setObjectName("l_spatial_filtering")
@@ -165,6 +165,7 @@ class Ui_Fenster(object):
         self.l_prefix.setObjectName("l_prefix")
         self.rb_create_average_mask = QtGui.QRadioButton(self.tab_general)
         self.rb_create_average_mask.setGeometry(QtCore.QRect(310, 450, 191, 22))
+        self.rb_create_average_mask.setChecked(True)
         self.rb_create_average_mask.setObjectName("rb_create_average_mask")
         self.rb_create_mask_subject = QtGui.QRadioButton(self.tab_general)
         self.rb_create_mask_subject.setGeometry(QtCore.QRect(310, 470, 231, 22))
@@ -201,9 +202,9 @@ class Ui_Fenster(object):
         self.l_functional_anatomical_image = QtGui.QLabel(self.tab_reg_settings)
         self.l_functional_anatomical_image.setGeometry(QtCore.QRect(20, 90, 251, 17))
         self.l_functional_anatomical_image.setObjectName("l_functional_anatomical_image")
-        self.lv_functional_anatomical_image = QtGui.QListView(self.tab_reg_settings)
-        self.lv_functional_anatomical_image.setGeometry(QtCore.QRect(20, 110, 601, 161))
-        self.lv_functional_anatomical_image.setObjectName("lv_functional_anatomical_image")
+        self.lw_functional_anatomical_image = QtGui.QListWidget(self.tab_reg_settings)
+        self.lw_functional_anatomical_image.setGeometry(QtCore.QRect(20, 110, 601, 161))
+        self.lw_functional_anatomical_image.setObjectName("lw_functional_anatomical_image")
         self.b_remove_anatomical_image = QtGui.QPushButton(self.tab_reg_settings)
         self.b_remove_anatomical_image.setGeometry(QtCore.QRect(440, 280, 181, 27))
         self.b_remove_anatomical_image.setObjectName("b_remove_anatomical_image")
@@ -332,7 +333,7 @@ class Ui_Fenster(object):
         self.b_load_settings.setObjectName("b_load_settings")
 
         self.retranslateUi(Fenster)
-        self.tabWidget.setCurrentIndex(2)
+        self.tabWidget.setCurrentIndex(0)
         QtCore.QObject.connect(self.b_exit, QtCore.SIGNAL("clicked()"), Fenster.close)
         QtCore.QObject.connect(self.cb_atlas_registration, QtCore.SIGNAL("clicked(bool)"), self.cb_show_registration_results.setEnabled)
         QtCore.QObject.connect(self.cb_create_mask, QtCore.SIGNAL("clicked(bool)"), self.cb_show_mask.setEnabled)

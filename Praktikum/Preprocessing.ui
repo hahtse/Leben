@@ -945,7 +945,7 @@ p, li { white-space: pre-wrap; }
        <number>500</number>
       </property>
      </widget>
-     <widget class="QCheckBox" name="cb_prealing_images">
+     <widget class="QCheckBox" name="cb_prealign_images">
       <property name="enabled">
        <bool>false</bool>
       </property>
@@ -958,7 +958,7 @@ p, li { white-space: pre-wrap; }
        </rect>
       </property>
       <property name="text">
-       <string>Prealing images</string>
+       <string>Prealign images</string>
       </property>
      </widget>
     </widget>
@@ -1401,7 +1401,7 @@ p, li { white-space: pre-wrap; }
   <connection>
    <sender>cb_rigid_registration</sender>
    <signal>clicked(bool)</signal>
-   <receiver>cb_prealing_images</receiver>
+   <receiver>cb_prealign_images</receiver>
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">

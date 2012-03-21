@@ -1,3 +1,31 @@
 Weight decay, Plastizität, Schlaf/Träumen
 
 dynamische Erweiterung/Verkleinerung von KNN
+
+3-D KNN mit Objektorientierung --> Neuronen als diskrete Objekte, die die Verbindungen zu anderen Objekten beinhalten, Berechnung auf Grafikkarte?
+
+Neuronen als diskretes Objekt: Besser wenn ein Ausgang und viele Eingänge (bessere Variante), oder viele Ausgänge und ein Eingang? - wo werden die Verbindungen abgelegt?
+Neuron feuert -> Überprüft die Ausgangszustände aller als Eingang eingetragener Neuronen -> Übertragungsfunktion -> Schreibt in Ausgang
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+David Sussillo, Paul Nuyujukian, Joline M Fan, Jonathan C Kao, Sergey D Stavisky, Stephen Ryu, Krishna Shenoy. (2012) A recurrent neural network for closed-loop intracortical brain–machine interface decoders. Journal of Neural Engineering 9:2, 026027
+Online publication date: 1-Apr-2012.
+CrossRef
+
+Principe et al., 1999
+J.C Principe, N.R Euliano, W.C Lefebvre
+Neural and Adaptive Systems: Fundamentals Through SimulationWiley, New York (1999)

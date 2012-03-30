@@ -2,21 +2,15 @@ Weight decay, Plastizität, Schlaf/Träumen
 
 dynamische Erweiterung/Verkleinerung von KNN
 
+vorhersage von Gehirnreaktionen mittels EEG und KNN
+
 3-D KNN mit Objektorientierung --> Neuronen als diskrete Objekte, die die Verbindungen zu anderen Objekten beinhalten, Berechnung auf Grafikkarte?
 
 Neuronen als diskretes Objekt: Besser wenn ein Ausgang und viele Eingänge (bessere Variante), oder viele Ausgänge und ein Eingang? - wo werden die Verbindungen abgelegt?
 Neuron feuert -> Überprüft die Ausgangszustände aller als Eingang eingetragener Neuronen -> Übertragungsfunktion -> Schreibt in Ausgang
 
+
 Arbeiten dazu: Blum (1992), Rao and Rao (1993), Masters (1993), Welstead (1994), Joey Rogers: Object-oriented neural networks in C++
-
-
-
-
-
-
-
-
-
 
 
 

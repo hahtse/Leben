@@ -1,3 +1,5 @@
 Weight decay, Plastizität, Schlaf/Träumen
 
 dynamische Erweiterung/Verkleinerung von KNN
+
+vorhersage von Gehirnreaktionen mittels EEG und KNN

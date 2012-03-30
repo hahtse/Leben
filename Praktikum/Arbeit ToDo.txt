@@ -3,3 +3,7 @@ GUI für Image-Preprocessing in PyQT -- erledigt, siehe Ordner vpreproc
 Erweiterung der python-isis Brücke
 
 Schreiben eines neuen Vista-Plugins
+
+Shell-Skript erstellen mit vpreproc - Auf Gabis Rückmeldung warten
+
+Optimierung von großen Datenstrukturen

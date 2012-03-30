@@ -1,5 +1,6 @@
+#! /usr/bin/python
 #
-#pregui.py
+#vpreproc.py
 #
 import sys
 import string
@@ -29,6 +30,7 @@ class PreProc(QtGui.QMainWindow):
         self.ui.le_directory.setText(self.homePath)
         self.output_dir=self.homePath        
         self.flag_atlas_on = True
+        self.script = None #Don't do this at home. children!
 
         self.statusBar().showMessage("Welcome!")
         self.templateDict = {"T1 MNI 1mm fullbrain": "/usr/share/lipsia/mni.v",
@@ -63,6 +65,7 @@ class PreProc(QtGui.QMainWindow):
         QtCore.QObject.connect(self.ui.comboBox_help, QtCore.SIGNAL("currentIndexChanged(int)"), self.show_help )
         QtCore.QObject.connect(self.ui.cb_atlas_registration, QtCore.SIGNAL("clicked()"), self.change_atlas_reg)
         QtCore.QObject.connect(self.ui.le_directory, QtCore.SIGNAL("editingFinishes()"), self.change_output_directory)
+        QtCore.QObject.connect(self.ui.b_exit, QtCore.SIGNAL("clicked()"), self.exit_program)
 
 #Einzelnes File hinzufuegen
     def add_data_to_list(self):
@@ -71,7 +74,7 @@ class PreProc(QtGui.QMainWindow):
             for fileName in dataList:
                 self.ui.lw_input_files.addItem(fileName)
                 self.ui.lw_functional_anatomical_image.addItem(fileName + " -> ")
-                self.myFileList.append(fileName)
+                self.myFileList.append(str(fileName))
 
 #Verzeichnis hinzufuegen
     def add_dir_to_list(self):
@@ -172,6 +175,11 @@ class PreProc(QtGui.QMainWindow):
         config.set('Registration Settings', 'Interpolator function', self.ui.comboBox_interpol_func.currentIndex())
         config.set('Registration Settings', 'Output resolution', self.ui.le_output_resolution.text())
 
+        config.add_section('Files')
+        config.set('Files', 'Number', len(self.myFileList))
+        for i in range(0,len(self.myFileList),1):
+            config.set('Files','File ' + str(i), self.myFileList[i])
+
         configFileName = QtGui.QFileDialog.getSaveFileName(self, "Save settings to file", self.homePath, ("*.lpp"))
         regExp = QtCore.QRegExp(QtCore.QString("*.lpp"))
         regExp.setPatternSyntax(QtCore.QRegExp.Wildcard)
@@ -222,8 +230,16 @@ class PreProc(QtGui.QMainWindow):
         self.ui.le_directory.setText(config.get('Preprocessing Steps', 'output_directory'))
         self.change_output_directory()
         self.ui.le_prefix.setText(config.get('Preprocessing Steps', 'prefix'))
-
-
+        numberOfFiles = config.getint('Files','Number')
+        self.ui.lw_input_files.clear()
+        self.ui.lw_functional_anatomical_image.clear()
+        self.myFileList = []
+        for i in range(0,numberOfFiles,1):
+            filepath = config.get('Files','File ' + str(i))
+            self.myFileList.append(filepath)
+            self.ui.lw_input_files.addItem(filepath)
+            self.ui.lw_functional_anatomical_image.addItem(filepath + " -> ")
+  
         template_number = config.getint('Registration Settings', 'Atlas Template number')
         if self.ui.comboBox_template.itemText(config.getint('Registration Settings', 'Atlas Template number')) == config.get('Registration Settings', 'Atlas Template text'):
             self.ui.comboBox_template.setCurrentIndex(template_number)
@@ -261,6 +277,7 @@ class PreProc(QtGui.QMainWindow):
                 self.flag_atlas_on = False
             else:
                 self.flag_atlas_on = True
+
 #Sicherstellen, dass die output_dir - variable mit dem uebereinstimmt was im Textfeld steht
     def change_output_directory(self):
         self.output_dir = self.ui.le_directory.text()
@@ -273,6 +290,8 @@ class PreProc(QtGui.QMainWindow):
             self.calculateProgressBar()
             self.ui.progressBar.setValue(0)
             self.ui.b_start_proc.setEnabled(False)
+            if (self.ui.cb_script.isChecked()):
+                self.generateScript()
             for myFile in self.myFileList:
                 if (self.convertAndCheck(str(myFile))):
                     checked = True
@@ -283,7 +302,7 @@ class PreProc(QtGui.QMainWindow):
                 finalList=[]
                 for file in self.myProcessList:
                     origName = file
-                    if(self.ui.cb_slicetime_correction.isChecked()):
+                    if(self.ui.cb_slicetime_correction.isChecked()):   
                         file = self.doSliceTimeCorrection(file)
                     if(self.ui.cb_movement_correction.isChecked()):
                         file = self.doMovementCorrection(file)
@@ -304,10 +323,13 @@ class PreProc(QtGui.QMainWindow):
                 self.currentImageIndex += 1
             else:
                 print "Processing stopped!"
-            self.ui.progressBar.setValue(0)
             self.progress()
+            self.ui.progressBar.setValue(0)            
             self.currentImageIndex = 0
             self.debugOutput("Done!", True)
+            if self.script != None :
+                self.script.close()
+                self.script = None
             self.ui.b_start_proc.setEnabled(True)        
 
     def convertAndCheck(self, myFile):
@@ -366,6 +388,11 @@ class PreProc(QtGui.QMainWindow):
         self.applyCommand("vslicetime -in " + str(file) + " -out " + str(outFile))
         self.removeList.append(outFile)
         return outFile
+
+    def doSliceTimeCorrection_script(self,file):
+        outFile = str(self.output_dir).rstrip("/") + "/slicetime_" + file.split("/")[len(file.split("/"))-1]
+        self.applyCommand("vslicetime -in " + str(file) + " -out " + str(outFile))
+        self.removeList.append(outFile)
 
     def doMovementCorrection(self,file):
         self.progress()
@@ -562,6 +589,20 @@ class PreProc(QtGui.QMainWindow):
         if(statusBar):
             self.statusBar().showMessage(outString)
             self.app.processEvents()
+
+    def generateScript(self):
+        scriptName = QtGui.QFileDialog.getSaveFileName(self, "Save Shell script", self.homePath, ("*.sh"))
+        regExp = QtCore.QRegExp(QtCore.QString("*.sh"))
+        regExp.setPatternSyntax(QtCore.QRegExp.Wildcard)
+        if(not scriptName.isEmpty()):
+            if not regExp.exactMatch(scriptName):
+                scriptName.append('.sh')
+            self.script = open(scriptName, 'w')
+            os.system(str("chmod +x " + scriptName))
+            self.script.write("#! /bin/sh\n")
+        else:
+            self.throwError("Please specify a filename")
+            generateScript()
             
     def applyCommand(self, command):
         if (self.ui.cb_debug_output.isChecked()):
@@ -569,6 +610,8 @@ class PreProc(QtGui.QMainWindow):
             os.system(str(command))
         else:
             os.system(str(command) + " > tmpOut 2> tmpOut")
+        if (self.ui.cb_script.isChecked() and self.script != None):
+            self.script.write("\n" + command)
             
     def removeTmpFiles(self):
         for fileToRemove in self.removeListEver:

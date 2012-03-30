@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'Preprocessing_Layouted.ui'
 #
-# Created: Mon Mar 12 15:13:16 2012
+# Created: Tue Mar 27 16:16:53 2012
 #      by: PyQt4 UI code generator 4.7.3
 #
 # WARNING! All changes made in this file will be lost!
@@ -146,6 +146,9 @@ class Ui_Fenster(object):
         self.le_prefix.setMaximumSize(QtCore.QSize(16777215, 27))
         self.le_prefix.setObjectName("le_prefix")
         self.verticalLayout_7.addWidget(self.le_prefix)
+        self.cb_script = QtGui.QCheckBox(self.tab_general)
+        self.cb_script.setObjectName("cb_script")
+        self.verticalLayout_7.addWidget(self.cb_script)
         spacerItem1 = QtGui.QSpacerItem(20, 39, QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.MinimumExpanding)
         self.verticalLayout_7.addItem(spacerItem1)
         self.horizontalLayout_13.addLayout(self.verticalLayout_7)
@@ -447,18 +450,18 @@ class Ui_Fenster(object):
         self.frame.setObjectName("frame")
         self.gridLayout = QtGui.QGridLayout(self.frame)
         self.gridLayout.setObjectName("gridLayout")
-        self.b_start_proc = QtGui.QPushButton(self.frame)
-        self.b_start_proc.setObjectName("b_start_proc")
-        self.gridLayout.addWidget(self.b_start_proc, 0, 0, 1, 1)
         self.b_save_settings = QtGui.QPushButton(self.frame)
         self.b_save_settings.setObjectName("b_save_settings")
         self.gridLayout.addWidget(self.b_save_settings, 0, 1, 1, 1)
         self.b_exit = QtGui.QPushButton(self.frame)
         self.b_exit.setObjectName("b_exit")
-        self.gridLayout.addWidget(self.b_exit, 1, 0, 1, 1)
+        self.gridLayout.addWidget(self.b_exit, 2, 0, 1, 1)
         self.b_load_settings = QtGui.QPushButton(self.frame)
         self.b_load_settings.setObjectName("b_load_settings")
-        self.gridLayout.addWidget(self.b_load_settings, 1, 1, 1, 1)
+        self.gridLayout.addWidget(self.b_load_settings, 2, 1, 1, 1)
+        self.b_start_proc = QtGui.QPushButton(self.frame)
+        self.b_start_proc.setObjectName("b_start_proc")
+        self.gridLayout.addWidget(self.b_start_proc, 0, 0, 1, 1)
         self.verticalLayout.addWidget(self.frame)
         self.progressBar = QtGui.QProgressBar(self.centralwidget)
         self.progressBar.setProperty("value", 1)
@@ -476,6 +479,20 @@ class Ui_Fenster(object):
 
         self.retranslateUi(Fenster)
         self.tabWidget.setCurrentIndex(0)
+        QtCore.QObject.connect(self.cb_atlas_registration, QtCore.SIGNAL("clicked(bool)"), self.cb_show_registration_results.setEnabled)
+        QtCore.QObject.connect(self.cb_create_mask, QtCore.SIGNAL("clicked(bool)"), self.cb_show_mask.setEnabled)
+        QtCore.QObject.connect(self.cb_high_pass, QtCore.SIGNAL("clicked(bool)"), self.sb_hp_cutoff.setEnabled)
+        QtCore.QObject.connect(self.cb_low_pass, QtCore.SIGNAL("clicked(bool)"), self.sb_lp_cutoff.setEnabled)
+        QtCore.QObject.connect(self.cb_set_repetition, QtCore.SIGNAL("clicked(bool)"), self.dsb_repetition_time.setEnabled)
+        QtCore.QObject.connect(self.cb_rigid_registration, QtCore.SIGNAL("clicked(bool)"), self.sb_max_iterations_p1.setEnabled)
+        QtCore.QObject.connect(self.cb_rigid_registration, QtCore.SIGNAL("clicked(bool)"), self.cb_prealign_images.setEnabled)
+        QtCore.QObject.connect(self.cb_affine_registration, QtCore.SIGNAL("clicked(bool)"), self.sb_max_iterations_p2.setEnabled)
+        QtCore.QObject.connect(self.cb_deformable_registration, QtCore.SIGNAL("clicked(bool)"), self.sb_max_iterations_p3.setEnabled)
+        QtCore.QObject.connect(self.cb_deformable_registration, QtCore.SIGNAL("clicked(bool)"), self.sb_max_deformation.setEnabled)
+        QtCore.QObject.connect(self.cb_atlas_registration, QtCore.SIGNAL("clicked(bool)"), self.cb_show_registration_results.setChecked)
+        QtCore.QObject.connect(self.cb_create_mask, QtCore.SIGNAL("clicked(bool)"), self.cb_show_mask.setChecked)
+        QtCore.QObject.connect(self.cb_rigid_registration, QtCore.SIGNAL("clicked(bool)"), self.cb_prealign_images.setChecked)
+        QtCore.QObject.connect(self.b_exit, QtCore.SIGNAL("clicked()"), Fenster.close)
         QtCore.QMetaObject.connectSlotsByName(Fenster)
 
     def retranslateUi(self, Fenster):
@@ -509,6 +526,7 @@ class Ui_Fenster(object):
         self.b_output_directory.setText(QtGui.QApplication.translate("Fenster", "...", None, QtGui.QApplication.UnicodeUTF8))
         self.l_prefix.setText(QtGui.QApplication.translate("Fenster", "Prefix", None, QtGui.QApplication.UnicodeUTF8))
         self.le_prefix.setText(QtGui.QApplication.translate("Fenster", "preproc_", None, QtGui.QApplication.UnicodeUTF8))
+        self.cb_script.setText(QtGui.QApplication.translate("Fenster", "Generate shellscript", None, QtGui.QApplication.UnicodeUTF8))
         self.l_temporal_filtering.setText(QtGui.QApplication.translate("Fenster", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
@@ -578,9 +596,9 @@ class Ui_Fenster(object):
         self.le_output_resolution.setText(QtGui.QApplication.translate("Fenster", "3,3,3", None, QtGui.QApplication.UnicodeUTF8))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_reg_settings), QtGui.QApplication.translate("Fenster", "Registration Settings", None, QtGui.QApplication.UnicodeUTF8))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_help), QtGui.QApplication.translate("Fenster", "Help", None, QtGui.QApplication.UnicodeUTF8))
-        self.b_start_proc.setText(QtGui.QApplication.translate("Fenster", "Start preprocessing", None, QtGui.QApplication.UnicodeUTF8))
         self.b_save_settings.setText(QtGui.QApplication.translate("Fenster", "Save Settings", None, QtGui.QApplication.UnicodeUTF8))
         self.b_exit.setText(QtGui.QApplication.translate("Fenster", "Exit", None, QtGui.QApplication.UnicodeUTF8))
         self.b_load_settings.setText(QtGui.QApplication.translate("Fenster", "Load  Settings", None, QtGui.QApplication.UnicodeUTF8))
+        self.b_start_proc.setText(QtGui.QApplication.translate("Fenster", "Start preprocessing", None, QtGui.QApplication.UnicodeUTF8))
 
 from PyQt4 import QtWebKit

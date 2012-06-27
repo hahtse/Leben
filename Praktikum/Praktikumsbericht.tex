@@ -1,0 +1,71 @@
+\documentclass[a4paper,10pt]{article}
+%\documentclass[a4paper,10pt]{scrartcl}
+
+\usepackage[utf8x]{inputenc}
+
+\title{Praktikumsbericht }
+\author{Hans-Christian Heinz, 50425, 09INB-T}
+\date{27.06.2012}
+\setlength{\parindent}{0cm}
+
+\pdfinfo{%
+  /Title    (Praktikumsbericht)
+  /Author   (Hans-Christian Heinz)
+  /Creator  ()
+  /Producer ()
+  /Subject  ()
+  /Keywords ()
+}
+
+\begin{document}
+\maketitle
+
+Ich habe mein Praktikum am Max-Planck-Institut für Kognitions- und Neurowissenschaften Leipzig in der Abteilung Neurophysik geleistet. Der Praktikumszeitraum erstreckte sich über 12 Wochen vom 1. März bis zum 25. Mai 2012. Meine Betreuerin war Fr. Dr. Gabriele Lohmann.\\
+Die Abteilung Neurophysik beschäftigt sich vor allem mit der Weiterentwicklung der Methodik der medizinisch-neurologischen Forschung. Dieses Forschungsgebiet umfasst neben der Verbesserung der technisch-ingenieurmäßigen Methoden (bessere Spulen für MR-Tomographen usw.) auch die Vertiefung des physikalischen Grundwissens im Bereich Neurologie und die Weiterentwicklung informationstechnischer Methoden zur Gewinnung und Aufbereitung von Daten für die weitere Forschung.\\
+Das Praktikum lässt sich grob in 4 Zeitabschnitte unterteilen:\\
+
+\section{März}
+Da ich dort vorher schon als studentische Hilfskraft (SHK) tätig war, entfiel die Einarbeitungszeit und ich konnte direkt an dem bereits seit Januar laufenden Projekt der Erstellung eines 3D-Viewers für das in der abteilungseigenen Programmpaket \emph{Lipsia} enthaltene Programm \emph{vast} unter Benutzung des \emph{VTK}-Toolkits weiterarbeiten.\\
+\emph{Vast} ist ein Visualisierungsprogramm, dass Daten aus fMRT-Messreihen in verschiedenen Formaten einlesen, darstellen und verarbeiten kann. Es verfügte schon vorher über die Möglichkeit, Daten dreidimensional - statt zweidimensional in 3 Schnittebenen - anzuzeigen. Jedoch stützte sich dieser Programmteil auf eine proprietäre Lizenz und war zudem nicht 64-bit-fähig, was die Darstellung sehr großer Datensätze unmöglich machte. Aus diesen Gründen erfolgte der Auftrag einer Reimplementierung dieser Funktionalität mittels freier Software.\\
+Die benutzte Sprache war hierbei \emph{C++}, unter Verwendung von einiger weniger \emph{Python}-Skripte zum testen, sowie des Open-Source build-Systems \emph{CMake}.\\
+Es wurden Kenntnisse in der, von mir bis dahin nicht genutzten, Sprache \emph{C++}, in der Benutzung des Visualisierungs-Toolkits \emph{VTK} und allgemeine Kenntnisse über die Verarbeitung von Grafikdaten gewonnen.\\
+
+\section{Anfang April}
+Nachdem das 3D-Widget für \emph{vast} fertig gestellt und dem für die Einbindung in das Programm Verantwortlichen übergeben wurde, erhielt ich den Auftrag, mich in die Programmbibliothek "\emph{ISIS}" einzuarbeiten und die \emph{ISIS}-\emph{Python}-\emph{bridge} um fehlende Funktionen zu erweitern.\\
+\emph{ISIS} ist eine Programmbibliothek, die verschiedene Funktionen zur Verfügung stellt um MR (Magnetresonanz)-Bilder einzulesen und zu verarbeiten. \emph{ISIS} wird, wie \emph{Lipsia} auch, von der Abteilung Neurophysik gepflegt und zur Verfügung gestellt.\\
+Die \emph{ISIS}-\emph{Python}-\emph{bridge} dient dazu, die meist in \emph{C++} geschriebenen Funktionen von \emph{ISIS} für \emph{Python}-Programme nutzbar zu machen. Dazu wird die \emph{Boost}.\emph{Python}-Bibliothek verwendet, die  aufwandsarmes \emph{C++}-\emph{wrapping} für \emph{Python} ermöglicht.\\
+Die zentrale Schwierigkeit bei der bridge ist die unterschiedliche Mächtigkeit von \emph{C++} und \emph{Python}, insbesondere die Möglichkeiten von \emph{templates}, die \emph{Python} in dieser Form nicht bietet.\\ 
+Die einfach zu behandelnden Funktionen waren durch die Benutzung von \emph{Boost} bereits relativ unproblematisch implementiert, so dass ich mich fast ausschließlich um die Problemfälle hätte kümmern müssen. Dieses haben ich dann jedoch aufgrund des viel zu hohen Aufwands, sowohl in der Zeit, als auch im Kenntnisstand, nicht bewältigen können. Die, salopp gesagt, grottige bis nicht vorhandene Dokumentation von \emph{ISIS}, \emph{Boost} und der \emph{bridge} trugen nicht zur Vereinfachung der Aufgabe bei.\\
+Bei der Bearbeitung dieser Aufgabe hatte ich Gelegenheit meine Kenntnisse in \emph{C++}, \emph{Python} und den Schwierigkeiten einer Schnittstelle zwischen den beiden zu vertiefen. Außerdem wurde mir nachdrücklich die Wichtigkeit einer ausführlichen und verständlichen Dokumentation von Code und Funktionalitäten vor Augen geführt.\\
+
+\section{Mitte April bis Mitte Mai}
+Danach bekam ich den Auftrag eine GUI mit angeschlossener dynamischer Skripterstellung für das \emph{preprocessing} von MRT-Daten zu erstellen.\\
+Der Hintergrund dieses Projektes war, dass die MRT-Datensätze eine Reihe von \emph{preprocessing}-Schritten - zum Beispiel zum Ausgleich von während der Aufnahme erfolgten Bewegungen - durchlaufen müssen, um verwertbar zu werden. Diese Schritte unterscheiden sich teils stark, je nach dem, wozu genau der Datensatz dient.\\
+Bisher war es nötig, die Programme von Hand nacheinander mit den richtigen Parametern über die Konsole aufzurufen. Zur Vereinheitlichung, Vereinfachung und verbesserten späteren Nachvollziehbarkeit nutzten die meisten der betroffenen Wissenschaftler selbst erstellte Shell-Skripte. Die GUI und das dahinter stehende Programm sollten ihnen diese Arbeit abnehmen.\\
+Die GUI ist mit Hilfe von \emph{Qt4} und dem im \emph{Qt4}-Paket enthaltenen \emph{Qt Designer} erstellt und anschließend mittels \emph{PyQt} nach \emph{Python} übersetzt worden. Das Backend ist ebenfalls in \emph{Python} verfasst um leichte Wartbarkeit und Erweiterbarkeit zu ermöglichen.\\
+Bei der Arbeit an dieser Aufgabe habe ich Kenntnisse in \emph{Qt} erwerben und meine bestehenden \emph{Python}-Kenntnisse erweitern können. Außerdem musste ich mich mit Themen wie usability, der Nachvollziehbarkeit von Schritten in der wissenschaftlichen Analyse und den verschiedenen Methoden der Informationsgewinnung aus einem gegebenen Datensatz beschäftigen.\\
+
+\section{Ab Mitte Mai} 
+Nachdem das GUI-Projekt abgeschlossen war, bot mir meine Betreuerin Fr. Dr. Lohmann das Thema \emph{nicht-negative Matrixfaktorisierung (kurz NMF) und ihre Anwendung auf Korrelationsmatrizen von blood oxygen level dependent (kurz BOLD)-Kontrast-Messreihen} als Aufgabenstellung für meine Bachelorarbeit an. Meine restliche Praktikumszeit verbrachte ich mit der Einarbeitung in das Thema und der Ausarbeitung der endgültigen Aufgabenstellung. Danach ging meine Beschäftigung als Praktikant nahtlos in eine Diplomandenstelle über.\\
+In diesem Abschnitt meines Praktikums konnte ich mich hautnah mit dem Forschungsbetrieb beschäftigen. Ich lernte, neben der Benutzung von \LaTeX, viel über wissenschaftliches Arbeiten, das Finden und die richtige Verwendung von relevanten Quellen, den Forschungsalltag im Allgemeinen und natürlich auch über mein BA-Thema.\\
+\\
+\\
+\\
+\\
+Abschließend kann ich sagen, dass ich das Praktikum in der Abteilung Neurophysik sehr interessant und lehrreich fand. Da ich nach Abschluss meines Bachelor- und Masterstudiums gerne in der Forschung - auch speziell im Gebiet Kognitions- und Neurowissenschaften - tätig werden würde, war das Praktikum eine unschätzbare Orientierungshilfe und eine gute Gelegenheit ein wissenschaftliches Umfeld kennen zu lernen.\\
+Ich kann das MPI für Kognitions- und Neurowissenschaften als Praktikumsort wärmstens empfehlen.\\
+\\
+\\
+\\
+\\
+\\
+\\
+Hans-Christian Heinz, Praktiant\\
+\\
+\\
+\\
+\\
+\\
+Dr. Gabriele Lohmann, Betreuerin
+
+\end{document}
